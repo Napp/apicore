@@ -5,7 +5,7 @@ namespace Napp\Api\Router\Provider;
 use Illuminate\Support\ServiceProvider as BaseProvider;
 use Napp\Api\Router\Router;
 
-class LaravelServiceProvider extends BaseProvider {
+class RouterServiceProvider extends BaseProvider {
 
     public function register()
     {
