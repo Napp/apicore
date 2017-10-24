@@ -20,13 +20,10 @@ class ApiGuard extends TokenGuard
     }
 
     /**
-     * We need to break the interface here.
-     * Front API login action uses email/password for user authentication and not standard api key.
-     *
      * @param array $credentials
      * @return bool
      */
-    public function attempt(array $credentials = [])
+    public function attempt(array $credentials = []): bool
     {
         $user = $this->provider->retrieveByCredentials($credentials);
 
@@ -46,7 +43,7 @@ class ApiGuard extends TokenGuard
     /**
      * @return string
      */
-    public function getTokenForRequest()
+    public function getTokenForRequest(): string
     {
         return $this->request->header(NappHttpHeaders::NAPP_API_KEY);
     }
