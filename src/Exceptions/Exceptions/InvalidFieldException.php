@@ -1,6 +1,6 @@
 <?php
 
-namespace Napp\Api\Exceptions\Exceptions;
+namespace Napp\Core\Api\Exceptions\Exceptions;
 
 class InvalidFieldException extends Exception
 {

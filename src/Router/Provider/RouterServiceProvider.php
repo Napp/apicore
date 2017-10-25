@@ -1,24 +1,22 @@
 <?php
 
-namespace Napp\Api\Router\Provider;
+namespace Napp\Core\Api\Router\Provider;
 
 use Illuminate\Support\ServiceProvider as BaseProvider;
-use Napp\Api\Router\Router;
+use Napp\Core\Api\Router\Router;
 
-class RouterServiceProvider extends BaseProvider {
-
+class RouterServiceProvider extends BaseProvider
+{
     public function register()
     {
-
     }
 
     public function boot()
     {
-        $this->app->singleton('internalrouter', function(){
+        $this->app->singleton('internalrouter', function () {
             $app = app();
 
             return new Router($app, $app['request'], $app['router']);
         });
     }
-
 }

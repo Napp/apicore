@@ -1,10 +1,10 @@
 <?php
 
-namespace Napp\Api\Validation;
+namespace Napp\Core\Api\Validation;
 
 use Illuminate\Contracts\Validation\Factory as ValidatorFactory;
 use Illuminate\Contracts\Validation\Validator;
-use Napp\Api\Exceptions\Exceptions\ValidationException;
+use Napp\Core\Api\Exceptions\Exceptions\ValidationException;
 
 trait ValidateTrait
 {

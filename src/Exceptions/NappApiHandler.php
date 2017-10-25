@@ -1,11 +1,11 @@
 <?php
 
-namespace Napp\Api\Exceptions;
+namespace Napp\Core\Api\Exceptions;
 
-use Napp\Api\Exceptions\Exceptions\Exception as NappException;
-use Napp\Api\Exceptions\Renderer\DebugRenderer;
-use Napp\Api\Exceptions\Renderer\Renderer;
-use Napp\Api\Exceptions\Renderer\RendererInterface;
+use Napp\Core\Api\Exceptions\Exceptions\Exception as NappException;
+use Napp\Core\Api\Exceptions\Renderer\DebugRenderer;
+use Napp\Core\Api\Exceptions\Renderer\Renderer;
+use Napp\Core\Api\Exceptions\Renderer\RendererInterface;
 use Illuminate\Http\JsonResponse;
 
 class NappApiHandler

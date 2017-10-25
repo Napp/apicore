@@ -1,6 +1,6 @@
 <?php
 
-namespace Napp\Api\Auth;
+namespace Napp\Core\Api\Auth;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\ServiceProvider;

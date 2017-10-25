@@ -1,9 +1,9 @@
 <?php
 
-namespace Napp\Api\Exceptions\Renderer;
+namespace Napp\Core\Api\Exceptions\Renderer;
 
 use Illuminate\Http\JsonResponse;
-use Napp\Api\Exceptions\Exceptions\Exception as NappException;
+use Napp\Core\Api\Exceptions\Exceptions\Exception as NappException;
 
 class Renderer implements RendererInterface
 {

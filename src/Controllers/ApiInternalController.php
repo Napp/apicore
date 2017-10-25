@@ -1,13 +1,13 @@
 <?php
 
-namespace Napp\Api\Controllers;
+namespace Napp\Core\Api\Controllers;
 
 use Illuminate\Auth\AuthManager;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
-use Napp\Api\Exceptions\Exceptions\ApiInternalCallException;
-use Napp\Api\Router\Router;
-use Napp\Api\Auth\NappHttpHeaders;
+use Napp\Core\Api\Exceptions\Exceptions\ApiInternalCallException;
+use Napp\Core\Api\Router\Router;
+use Napp\Core\Api\Auth\NappHttpHeaders;
 
 class ApiInternalController extends BaseController
 {
@@ -97,7 +97,7 @@ class ApiInternalController extends BaseController
     {
         return array_merge($headers, [
             NappHttpHeaders::NAPP_API_CALL_TYPE => 'internal',
-            NappHttpHeaders::NAPP_AUTH_USER_ID => $this->auth->guard()->id(),
+            NappHttpHeaders::NAPP_AUTH_GLOBAL_USER_ID => $this->auth->guard()->id(),
         ]);
     }
 

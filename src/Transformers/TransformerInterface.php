@@ -1,6 +1,6 @@
 <?php
 
-namespace Napp\Api\Transformers;
+namespace Napp\Core\Api\Transformers;
 
 use Illuminate\Contracts\Support\Arrayable;
 

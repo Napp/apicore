@@ -1,14 +1,14 @@
 <?php
 
-namespace Napp\Api\Requests;
+namespace Napp\Core\Api\Requests;
 
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
-use Napp\Api\Exceptions\Exceptions\ApiInternalCallValidationException;
-use Napp\Api\Exceptions\Exceptions\InvalidFieldException;
-use Napp\Api\Exceptions\Exceptions\ValidationException;
-use Napp\Api\Transformers\ApiTransformer;
-use Napp\Api\Transformers\TransformerInterface;
+use Napp\Core\Api\Exceptions\Exceptions\ApiInternalCallValidationException;
+use Napp\Core\Api\Exceptions\Exceptions\InvalidFieldException;
+use Napp\Core\Api\Exceptions\Exceptions\ValidationException;
+use Napp\Core\Api\Transformers\ApiTransformer;
+use Napp\Core\Api\Transformers\TransformerInterface;
 
 abstract class ApiRequest extends FormRequest
 {
@@ -107,7 +107,6 @@ abstract class ApiRequest extends FormRequest
      */
     protected function handleApiInternalCallFailedValidation(Validator $validator)
     {
-
         $input = $this->getTransformer()->transformOutput($this->except($this->dontFlash));
         $errors = collect($this->getTransformer()->transformOutput($validator->getMessageBag()->toArray()))
             ->reject(function ($error) {

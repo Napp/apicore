@@ -1,6 +1,6 @@
 <?php
 
-namespace Napp\Api\Middleware;
+namespace Napp\Core\Api\Middleware;
 
 use Closure;
 

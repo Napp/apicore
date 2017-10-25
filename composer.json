@@ -14,7 +14,7 @@
   ],
   "autoload": {
     "psr-4": {
-      "Napp\\Api\\": "src/"
+      "Napp\\Core\\Api\\": "src/"
     }
   },
   "autoload-dev": {

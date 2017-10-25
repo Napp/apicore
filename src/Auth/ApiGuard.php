@@ -1,6 +1,6 @@
 <?php
 
-namespace Napp\Api\Auth;
+namespace Napp\Core\Api\Auth;
 
 use Illuminate\Auth\TokenGuard;
 use Illuminate\Contracts\Auth\UserProvider;

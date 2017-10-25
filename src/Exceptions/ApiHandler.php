@@ -1,10 +1,10 @@
 <?php
 
-namespace Napp\Api\Exceptions;
+namespace Napp\Core\Api\Exceptions;
 
 use Exception;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
-use Napp\Api\Exceptions\Exceptions\ApiInternalCallValidationException;
+use Napp\Core\Api\Exceptions\Exceptions\ApiInternalCallValidationException;
 
 class ApiHandler extends ExceptionHandler
 {

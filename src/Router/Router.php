@@ -1,13 +1,13 @@
 <?php
 
-namespace Napp\Api\Router;
+namespace Napp\Core\Api\Router;
 
 use Illuminate\Foundation\Application;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Router as LaravelRouter;
 
-class Router {
-
+class Router
+{
     private $app;
 
     private $router;
@@ -82,7 +82,7 @@ class Router {
      */
     public function batchRequest(array $requests)
     {
-        foreach($requests as $i => $request){
+        foreach ($requests as $i => $request) {
             $requests[$i] = call_user_func_array([$this, 'singleRequest'], $request);
         }
 
@@ -195,7 +195,7 @@ class Router {
     {
         $transformed = [];
 
-        foreach($headers as $headerType => $headerValue) {
+        foreach ($headers as $headerType => $headerValue) {
             $headerType = strtoupper(str_replace('-', '_', $headerType));
 
             $transformed[$headerType] = $headerValue;
@@ -214,7 +214,7 @@ class Router {
     {
         $server = [];
 
-        foreach($headers as $headerType => $headerValue){
+        foreach ($headers as $headerType => $headerValue) {
             $headerType = 'HTTP_' . $headerType;
 
             $server[$headerType] = $headerValue;
@@ -222,5 +222,4 @@ class Router {
 
         return $server;
     }
-
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace Napp\Api\Controllers;
+namespace Napp\Core\Api\Controllers;
 
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;

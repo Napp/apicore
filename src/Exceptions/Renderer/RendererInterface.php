@@ -1,6 +1,6 @@
 <?php
 
-namespace Napp\Api\Exceptions\Renderer;
+namespace Napp\Core\Api\Exceptions\Renderer;
 
 use Illuminate\Http\JsonResponse;
 

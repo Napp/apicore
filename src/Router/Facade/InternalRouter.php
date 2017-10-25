@@ -1,11 +1,11 @@
 <?php
 
-namespace Napp\Api\Router\Facade;
+namespace Napp\Core\Api\Router\Facade;
 
 use Illuminate\Support\Facades\Facade;
 
 /**
- * @see \Napp\Api\Router\Router
+ * @see \Napp\Core\Api\Router\Router
  */
 class InternalRouter extends Facade
 {

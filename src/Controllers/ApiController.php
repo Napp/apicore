@@ -1,6 +1,6 @@
 <?php
 
-namespace Napp\Api\Controllers;
+namespace Napp\Core\Api\Controllers;
 
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
