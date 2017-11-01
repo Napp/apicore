@@ -1,6 +1,6 @@
 <?php
 
-namespace Napp\Tests\stubs;
+namespace Napp\Core\Api\Tests\stubs;
 
 use Napp\Core\Api\Requests\ApiRequest;
 use Napp\Core\Api\Transformers\ApiTransformer;

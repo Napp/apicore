@@ -1,6 +1,6 @@
 <?php
 
-namespace Napp\Tests;
+namespace Napp\Core\Api\Tests;
 
 abstract class TestCase extends \Orchestra\Testbench\TestCase
 {

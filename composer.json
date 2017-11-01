@@ -19,7 +19,7 @@
   },
   "autoload-dev": {
     "psr-4": {
-      "Napp\\Tests\\": "tests/"
+      "Napp\\Core\\Api\\Tests\\": "tests/"
     }
   },
   "require": {

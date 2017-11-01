@@ -1,6 +1,6 @@
 <?php
 
-namespace Napp\Tests\Unit;
+namespace Napp\Core\Api\Tests\Unit;
 
 use Napp\Core\Api\Exceptions\Exceptions\InvalidFieldException;
 use Napp\Core\Api\Exceptions\Exceptions\ValidationException;
