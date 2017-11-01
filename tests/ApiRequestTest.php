@@ -5,8 +5,8 @@ namespace Napp\Core\Api\Tests\Unit;
 use Napp\Core\Api\Exceptions\Exceptions\InvalidFieldException;
 use Napp\Core\Api\Exceptions\Exceptions\ValidationException;
 use Napp\Core\Api\Requests\Provider\RequestServiceProvider;
-use Napp\Tests\stubs\ApiRequestStub;
-use Napp\Tests\TestCase;
+use Napp\Core\Api\Tests\stubs\ApiRequestStub;
+use Napp\Core\Api\Tests\TestCase;
 
 class ApiRequestTest extends TestCase
 {

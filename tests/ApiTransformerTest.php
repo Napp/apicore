@@ -3,7 +3,7 @@
 namespace Napp\Core\Api\Tests\Unit;
 
 use Napp\Core\Api\Transformers\ApiTransformer;
-use Napp\Tests\TestCase;
+use Napp\Core\Api\Tests\TestCase;
 
 class ApiTransformerTest extends TestCase
 {
