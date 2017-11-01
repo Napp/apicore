@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "dd779eff99174af84db3571464bbdcaf",
+    "content-hash": "b331ca16aa0348bca91c195bf4ee64b9",
     "packages": [
         {
             "name": "doctrine/inflector",
@@ -228,16 +228,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v5.5.18",
+            "version": "v5.5.17",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "1cc21baac11551377734b8c17ead17db4c34fe21"
+                "reference": "3a16d196bd8d2b7761c9b0060a30a3687c3ea201"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/1cc21baac11551377734b8c17ead17db4c34fe21",
-                "reference": "1cc21baac11551377734b8c17ead17db4c34fe21",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/3a16d196bd8d2b7761c9b0060a30a3687c3ea201",
+                "reference": "3a16d196bd8d2b7761c9b0060a30a3687c3ea201",
                 "shasum": ""
             },
             "require": {
@@ -278,6 +278,7 @@
                 "illuminate/database": "self.version",
                 "illuminate/encryption": "self.version",
                 "illuminate/events": "self.version",
+                "illuminate/exception": "self.version",
                 "illuminate/filesystem": "self.version",
                 "illuminate/hashing": "self.version",
                 "illuminate/http": "self.version",
@@ -355,7 +356,7 @@
                 "framework",
                 "laravel"
             ],
-            "time": "2017-10-19T12:50:26+00:00"
+            "time": "2017-10-17T12:19:22+00:00"
         },
         {
             "name": "league/flysystem",
@@ -2055,6 +2056,56 @@
             "time": "2017-10-02T12:16:05+00:00"
         },
         {
+            "name": "fzaninotto/faker",
+            "version": "v1.7.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/fzaninotto/Faker.git",
+                "reference": "d3ed4cc37051c1ca52d22d76b437d14809fc7e0d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/fzaninotto/Faker/zipball/d3ed4cc37051c1ca52d22d76b437d14809fc7e0d",
+                "reference": "d3ed4cc37051c1ca52d22d76b437d14809fc7e0d",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^5.3.3 || ^7.0"
+            },
+            "require-dev": {
+                "ext-intl": "*",
+                "phpunit/phpunit": "^4.0 || ^5.0",
+                "squizlabs/php_codesniffer": "^1.5"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.8-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Faker\\": "src/Faker/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "François Zaninotto"
+                }
+            ],
+            "description": "Faker is a PHP library that generates fake data for you.",
+            "keywords": [
+                "data",
+                "faker",
+                "fixtures"
+            ],
+            "time": "2017-08-15T16:48:10+00:00"
+        },
+        {
             "name": "gecko-packages/gecko-php-unit",
             "version": "v2.2",
             "source": {
@@ -2252,6 +2303,127 @@
                 "object graph"
             ],
             "time": "2017-10-19T19:58:43+00:00"
+        },
+        {
+            "name": "orchestra/testbench",
+            "version": "v3.5.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/orchestral/testbench.git",
+                "reference": "a373ba077c60a90ffcaea9eb8ac2d6605db94a04"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/orchestral/testbench/zipball/a373ba077c60a90ffcaea9eb8ac2d6605db94a04",
+                "reference": "a373ba077c60a90ffcaea9eb8ac2d6605db94a04",
+                "shasum": ""
+            },
+            "require": {
+                "laravel/framework": "~5.5.0",
+                "orchestra/testbench-core": "~3.5.4",
+                "php": ">=7.0",
+                "phpunit/phpunit": "~6.0"
+            },
+            "require-dev": {
+                "mockery/mockery": "^0.9.4",
+                "orchestra/database": "~3.5.0"
+            },
+            "suggest": {
+                "orchestra/testbench-browser-kit": "Allow to use legacy BrowserKit for testing (~3.5)."
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.5-dev"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Mior Muhammad Zaki",
+                    "email": "crynobone@gmail.com",
+                    "homepage": "https://github.com/crynobone"
+                }
+            ],
+            "description": "Laravel Testing Helper for Packages Development",
+            "homepage": "http://orchestraplatform.com/docs/latest/components/testbench/",
+            "keywords": [
+                "BDD",
+                "TDD",
+                "laravel",
+                "orchestra-platform",
+                "orchestral",
+                "testing"
+            ],
+            "time": "2017-10-08T08:01:03+00:00"
+        },
+        {
+            "name": "orchestra/testbench-core",
+            "version": "v3.5.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/orchestral/testbench-core.git",
+                "reference": "afecbf0d68c43f0fd7ae53447bb28bcf08faf0ad"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/orchestral/testbench-core/zipball/afecbf0d68c43f0fd7ae53447bb28bcf08faf0ad",
+                "reference": "afecbf0d68c43f0fd7ae53447bb28bcf08faf0ad",
+                "shasum": ""
+            },
+            "require": {
+                "fzaninotto/faker": "~1.4",
+                "php": ">=7.0"
+            },
+            "require-dev": {
+                "laravel/framework": "~5.5.0",
+                "mockery/mockery": "^0.9.4",
+                "orchestra/database": "~3.5.0",
+                "phpunit/phpunit": "~6.0"
+            },
+            "suggest": {
+                "laravel/framework": "Required for testing (~5.5.0).",
+                "mockery/mockery": "Allow to use Mockery for testing (^0.9.4).",
+                "orchestra/database": "Allow to use --realpath migration for testing (~3.5).",
+                "orchestra/testbench-browser-kit": "Allow to use legacy BrowserKit for testing (~3.5).",
+                "phpunit/phpunit": "Allow to use PHPUnit for testing (~6.0)."
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.5-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Orchestra\\Testbench\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Mior Muhammad Zaki",
+                    "email": "crynobone@gmail.com",
+                    "homepage": "https://github.com/crynobone"
+                }
+            ],
+            "description": "Testing Helper for Laravel Development",
+            "homepage": "http://orchestraplatform.com/docs/latest/components/testbench/",
+            "keywords": [
+                "BDD",
+                "TDD",
+                "laravel",
+                "orchestra-platform",
+                "orchestral",
+                "testing"
+            ],
+            "time": "2017-10-08T07:47:55+00:00"
         },
         {
             "name": "phar-io/manifest",
