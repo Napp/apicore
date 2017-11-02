@@ -1,11 +1,6 @@
-build:
-  tests: 
-    override: 
-      - 
-        command: "vendor/bin/phpunit --coverage-clover=some-file"
-        coverage: 
-          file: some-file
-          format: clover
+filter:
+  paths: [src/*]
+  excluded_paths: [tests/*]
 checks: 
   php: 
     fix_doc_comments: true
@@ -21,11 +16,13 @@ checks:
     remove_extra_empty_lines: true
     remove_php_closing_tag: true
     remove_trailing_whitespace: true
-filter: 
-  excluded_paths: 
-    - tests/*
-tools: 
+tools:
+  external_code_coverage:
+    timeout: 1200
+    runs: 3
+  php_code_coverage: false
   php_code_sniffer: 
     config: 
       standard: PSR2
-    enabled: true
+    filter:
+      paths: ['src']
