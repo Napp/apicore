@@ -81,6 +81,10 @@ class NappApiHandler
         switch ($this->getResponseCode($e)) {
             case 400:
                 return 220;
+            case 401:
+                return 135;
+            case 403:
+                return 64;
             case 404:
                 return 34;
             case 405:

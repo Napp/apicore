@@ -53,6 +53,24 @@ class Renderer implements RendererInterface
                     ]],
                     $this->responseCode
                 );
+            case 401:
+                return response()->json(
+                    [
+                        'error' => [
+                            'code' => $this->statusCode,
+                            'message' => 'Authentication credentials were missing or incorrect'
+                        ]],
+                    $this->responseCode
+                );
+            case 403:
+                return response()->json(
+                    [
+                        'error' => [
+                            'code' => $this->statusCode,
+                            'message' => 'Forbidden'
+                        ]],
+                    $this->responseCode
+                );
             case 404:
                 return response()->json(
                     [
