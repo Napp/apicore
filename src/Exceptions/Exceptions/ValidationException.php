@@ -9,7 +9,7 @@ class ValidationException extends Exception
      *
      * @var int
      */
-    public $responseCode = 400;
+    public $responseCode = 422;
 
     /**
      * The suggested status code.

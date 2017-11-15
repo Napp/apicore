@@ -82,7 +82,12 @@ abstract class ApiRequest extends FormRequest
      */
     protected function isApiInternalCall(): bool
     {
-        return request()->isApiInternalCall();
+        $request = request();
+        if (true === method_exists($request, 'isApiInternalCall')) {
+            return $request->isApiInternalCall();
+        }
+
+        return false;
     }
 
     /**
