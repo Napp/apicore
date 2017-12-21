@@ -40,6 +40,15 @@
     "squizlabs/php_codesniffer": "^3.1",
     "orchestra/testbench": "~3.0"
   },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "Napp\\Core\\Api\\Requests\\Provider\\RequestServiceProvider",
+        "Napp\\Core\\Api\\Router\\Provider\\RouterServiceProvider"
+      ],
+      "aliases": {}
+    }
+  },
   "scripts": {
     "test": "vendor/bin/phpunit"
   },
