@@ -128,15 +128,7 @@ class Router
 
         // Once the request has completed we reset the currentRequest of the router
         // to match the original request.
-        $this->request->instance()->initialize(
-            $currentRequest->query->all(),
-            $currentRequest->request->all(),
-            $currentRequest->attributes->all(),
-            $currentRequest->cookies->all(),
-            $currentRequest->files->all(),
-            $currentRequest->server->all(),
-            $currentRequest->getContent()
-        );
+        $this->app->instance('request', $currentRequest);
 
         return $response;
     }
