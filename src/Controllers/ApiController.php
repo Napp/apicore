@@ -155,7 +155,7 @@ class ApiController extends BaseController
     public function responseValidationFailed(string $message = 'Validation error.'): JsonResponse
     {
         return $this->setStatusCode(215)
-            ->setResponseCode(400)
+            ->setResponseCode(422)
             ->respondWithError($message);
     }
 
