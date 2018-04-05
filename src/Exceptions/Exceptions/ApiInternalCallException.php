@@ -17,6 +17,11 @@ class ApiInternalCallException extends \RuntimeException
     protected $exceptionMessage;
 
     /**
+     * @var \Exception
+     */
+    protected $previousException;
+
+    /**
      * @param Response $response
      * @param string $message
      */
@@ -24,6 +29,8 @@ class ApiInternalCallException extends \RuntimeException
     {
         $this->response = $response;
         $this->exceptionMessage = $message;
+        $this->message = $message;
+        $this->previousException = $response->exception;
     }
 
     /**
@@ -41,4 +48,13 @@ class ApiInternalCallException extends \RuntimeException
     {
         return $this->exceptionMessage;
     }
+
+    /**
+     * @return \Exception
+     */
+    public function getPreviousException()
+    {
+        return $this->previousException;
+    }
 }
+
