@@ -54,6 +54,10 @@ class NappApiHandler
         if (true === method_exists($e, 'getStatusCode')) {
             return $e->getStatusCode();
         }
+        
+        if (property_exists($e, 'status')) {
+            return $e->status;
+        }
 
         switch (last(explode('\\', get_class($e)))) {
             case 'ModelNotFoundException':
