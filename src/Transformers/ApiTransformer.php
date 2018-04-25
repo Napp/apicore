@@ -14,6 +14,14 @@ class ApiTransformer implements TransformerInterface
     protected $apiMapping = [];
 
     /**
+     * Strict mode removes keys that are
+     * not specified in api mapping array.
+     *
+     * @var bool
+     */
+    protected $strict = false;
+
+    /**
      * @param array|Model $apiMapping
      * @return void
      */
@@ -23,7 +31,7 @@ class ApiTransformer implements TransformerInterface
 
         if (true === $apiMapping instanceof Model && true === property_exists($apiMapping, 'apiMapping')) {
             $this->apiMapping = $apiMapping->apiMapping;
-        } elseif (true === is_array($apiMapping)) {
+        } elseif (true === \is_array($apiMapping)) {
             $this->apiMapping = $apiMapping;
         }
     }
@@ -36,7 +44,7 @@ class ApiTransformer implements TransformerInterface
     {
         $input = [];
 
-        $data = (true === is_array($data)) ? $data : $data->toArray();
+        $data = (true === \is_array($data)) ? $data : $data->toArray();
         foreach ($data as $key => $value) {
             $input[$this->findOriginalKey($key)] = $value;
         }
@@ -57,8 +65,11 @@ class ApiTransformer implements TransformerInterface
                 $output[] = $this->transformOutput($item);
             }
         } else {
-            $data = (true === is_array($data)) ? $data : $data->toArray();
+            $data = (true === \is_array($data)) ? $data : $data->toArray();
             foreach ($data as $key => $value) {
+                if (true === $this->strict && false === array_key_exists($key, $this->apiMapping)) {
+                    continue;
+                }
                 $output[$this->findNewKey($key)] = $this->convertValueType($key, $value);
             }
         }
@@ -73,7 +84,7 @@ class ApiTransformer implements TransformerInterface
     protected function findOriginalKey(string $newKey)
     {
         foreach ($this->apiMapping as $key => $value) {
-            if (true === in_array($newKey, $value)) {
+            if (true === \in_array($newKey, $value)) {
                 return $key;
             }
         }
