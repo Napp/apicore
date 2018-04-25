@@ -46,7 +46,31 @@ class ApiTransformerTest extends TestCase
         ];
         $transformedInput = $this->transformer->transformInput($input);
 
-        $this->assertArraySubset($expectedInput, $transformedInput);
+        $this->assertEquals($expectedInput, $transformedInput);
+    }
+
+    public function test_strict_output_transforming()
+    {
+        $reflection = new \ReflectionProperty(\get_class($this->transformer), 'strict');
+        $reflection->setAccessible(true);
+        $reflection->setValue($this->transformer, true);
+
+        $output = [
+            'id' => 1,
+            'name' => 'Wayne Industries',
+            'has_access' => 0,
+            'some_additional_field' => 'some_additional_value'
+        ];
+
+        $expectedOutput = [
+            'id' => 1,
+            'companyName' => 'Wayne Industries',
+            'hasAccess' => false,
+        ];
+
+        $transformedOutput = $this->transformer->transformOutput($output);
+        $this->assertEquals($expectedOutput, $transformedOutput);
+        $this->assertArrayNotHasKey('some_additional_field', $transformedOutput);
     }
 
     public function test_output_transforming()
@@ -65,9 +89,8 @@ class ApiTransformerTest extends TestCase
             'some_additional_field' => 'some_additional_value'
         ];
 
-
         $transformedOutput = $this->transformer->transformOutput($output);
 
-        $this->assertArraySubset($expectedOutput, $transformedOutput);
+        $this->assertEquals($expectedOutput, $transformedOutput);
     }
 }
