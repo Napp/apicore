@@ -142,6 +142,8 @@ class ApiTransformer implements TransformerInterface
                 return (array) $value;
             case 'json':
                 return json_decode($value);
+            case 'float':
+                return (float) $value;
             default:
                 return $value;
         }
