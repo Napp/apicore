@@ -115,7 +115,7 @@ class ApiTransformerTest extends TestCase
         ];
 
         $expectedOutput = [
-            'price' => null
+            'price' => 0
         ];
 
         $this->assertSame($expectedOutput, $this->transformer->transformOutput($input));
@@ -142,11 +142,11 @@ class ApiTransformerTest extends TestCase
         ]);
 
         $input = [
-            'price' => '100.54'
+            'price' => '100.5542'
         ];
 
         $expectedOutput = [
-            'price' => 100.54
+            'price' => 100.55
         ];
 
         $this->assertSame($expectedOutput, $this->transformer->transformOutput($input));

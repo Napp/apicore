@@ -123,7 +123,7 @@ class ApiTransformer implements TransformerInterface
             }
 
             if ('Nullable' === $method) {
-                if (true === empty($value)) {
+                if (true === empty($value) && false === \is_numeric($value)) {
                     return null;
                 }
 
