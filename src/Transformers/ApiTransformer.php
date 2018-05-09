@@ -144,9 +144,9 @@ class ApiTransformer implements TransformerInterface
     {
         $parameters = [];
 
-        // The format for specifying validation rules and parameters follows an
-        // easy {rule}:{parameters} formatting convention. For instance the
-        // rule "Max:3" states that the value may only be three letters.
+        // The format for transforming data-types and parameters follows an
+        // easy {data-type}:{parameters} formatting convention. For instance the
+        // data-type "float:3" states that the value will be converted to a float with 3 decimals.
         if (mb_strpos($type, ':') !== false) {
             list($dataType, $parameter) = explode(':', $type, 2);
 
@@ -190,7 +190,7 @@ class ApiTransformer implements TransformerInterface
             );
         }
 
-        return [static::parseStringDataType($type)];
+        return [static::parseStringDataType(trim($type))];
     }
 
     /**
