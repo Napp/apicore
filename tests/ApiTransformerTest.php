@@ -93,4 +93,62 @@ class ApiTransformerTest extends TestCase
 
         $this->assertEquals($expectedOutput, $transformedOutput);
     }
+
+    public function test_the_datatype_is_nullable()
+    {
+        $this->transformer->setApiMapping([
+            'price' => ['newName' => 'price', 'dataType' => 'nullable|int']
+        ]);
+
+        $input = [
+            'price' => '100'
+        ];
+
+        $expectedOutput = [
+            'price' => 100
+        ];
+
+        $this->assertSame($expectedOutput, $this->transformer->transformOutput($input));
+
+        $input = [
+            'price' => 0
+        ];
+
+        $expectedOutput = [
+            'price' => 0
+        ];
+
+        $this->assertSame($expectedOutput, $this->transformer->transformOutput($input));
+
+        $this->transformer->setApiMapping([
+            'description' => ['newName' => 'description', 'dataType' => 'array|nullable']
+        ]);
+
+        $input = [
+            'description' => []
+        ];
+
+        $expectedOutput = [
+            'description' => null
+        ];
+
+        $this->assertSame($expectedOutput, $this->transformer->transformOutput($input));
+    }
+
+    public function test_arguments_can_be_passed_to_the_datatype()
+    {
+        $this->transformer->setApiMapping([
+            'price' => ['newName' => 'price', 'dataType' => 'float:2']
+        ]);
+
+        $input = [
+            'price' => '100.5542'
+        ];
+
+        $expectedOutput = [
+            'price' => 100.55
+        ];
+
+        $this->assertSame($expectedOutput, $this->transformer->transformOutput($input));
+    }
 }
