@@ -2,11 +2,31 @@
 
 namespace Napp\Core\Api\Tests\Unit;
 
+use Napp\Core\Api\Tests\stubs\DataStub;
 use Napp\Core\Api\Transformers\ApiTransformer;
 use Napp\Core\Api\Tests\TestCase;
 
 class ApiTransformerTest extends TestCase
 {
+    /**
+     * Define environment setup.
+     *
+     * @param  \Illuminate\Foundation\Application   $app
+     *
+     * @return void
+     */
+    protected function getEnvironmentSetUp($app)
+    {
+        /** @var $app \Illuminate\Foundation\Application */
+        $app['config']->set('database.connections.testing', [
+            'driver' => 'sqlite',
+            'database' => ':memory:',
+            'prefix' => '',
+        ]);
+
+        $app['config']->set('database.default', 'testing');
+    }
+
     /**
      * @var ApiTransformer
      */
@@ -150,5 +170,82 @@ class ApiTransformerTest extends TestCase
         ];
 
         $this->assertSame($expectedOutput, $this->transformer->transformOutput($input));
+    }
+
+    public function test_it_transforms_instances_if_transformeraware_interfaces()
+    {
+        $this->transformer->setApiMapping([
+            'title' => ['newName' => 'title', 'dataType' => 'string'],
+            'relationship' => ['newName' => 'some-relationship', 'dataType' => 'relationship'],
+            'testing-relationship' => ['newName' => 'new-relationship', 'dataType' => 'relationship']
+        ]);
+
+        $input = [
+            'title' => 'testing-123',
+            'relationship' => collect([
+                new DataStub([
+                    'title' => 'string',
+                    'array' => [
+                        [
+                            'name' => 'some-name'
+                        ],
+                        [
+                            'name' => 'some-name'
+                        ]
+                    ]
+                ]),
+                new DataStub([
+                    'title' => 'string',
+                    'array' => [
+                        [
+                            'name' => 'some-name'
+                        ],
+                        [
+                            'name' => 'some-name'
+                        ]
+                    ]
+                ])
+            ]),
+            'testing-relationship' => new DataStub([
+                'title' => 'string',
+                'array' => [
+                    [
+                        'name' => 'some-name'
+                    ],
+                    [
+                        'name' => 'some-name'
+                    ]
+                ]
+            ]),
+        ];
+
+        $output = $this->transformer->transformOutput($input);
+
+        $this->assertEquals([
+            'title' => 'testing-123',
+            'some-relationship' => [
+                [
+                    'title' => 'string',
+                    'items' => [
+                        ['title' => 'some-name'],
+                        ['title' => 'some-name'],
+                    ]
+                ],
+                [
+                    'title' => 'string',
+                    'items' => [
+                        ['title' => 'some-name'],
+                        ['title' => 'some-name'],
+                    ]
+                ],
+            ],
+            'new-relationship' => [
+                'title' => 'string',
+                'items' => [
+                    ['title' => 'some-name'],
+                    ['title' => 'some-name'],
+                ]
+            ]
+        ], $output);
     }
 }

@@ -12,7 +12,7 @@ class ApiTransformer implements TransformerInterface
     /**
      * @var array
      */
-    protected $apiMapping = [];
+    public $apiMapping = [];
 
     /**
      * Strict mode removes keys that are
@@ -71,6 +71,7 @@ class ApiTransformer implements TransformerInterface
                 if (true === $this->strict && false === array_key_exists($key, $this->apiMapping)) {
                     continue;
                 }
+
                 $output[$this->findNewKey($key)] = $this->convertValueType($key, $value);
             }
         }
@@ -109,6 +110,7 @@ class ApiTransformer implements TransformerInterface
     /**
      * @param string $key
      * @param mixed $value
+     * @param string $newKey
      * @return mixed
      */
     protected function convertValueType(string $key, $value)
