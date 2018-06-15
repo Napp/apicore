@@ -18,10 +18,9 @@ class ApiRequestTest extends TestCase
     public function setUp()
     {
         parent::setUp();
-        $container = $this->app->make(\Illuminate\Contracts\Container\Container::class);
 
         $this->request = new ApiRequestStub();
-        $this->request->setContainer($container);
+        $this->request->setContainer($this->app);
     }
 
     public function test_required_field()
@@ -30,6 +29,13 @@ class ApiRequestTest extends TestCase
 
         $this->request->setRules(['name' => 'required']);
         $this->request->setData(['name' => '']);
+
+        // Laravel 5.6 changed the method validate method on the FormRequest to validateResolved.
+        if (true === version_compare($this->app->version(), '5.6', '>=')) {
+            $this->request->validateResolved();
+            return;
+        }
+
         $this->request->validate();
     }
 
@@ -39,6 +45,13 @@ class ApiRequestTest extends TestCase
 
         $this->request->setRules(['number' => 'integer']);
         $this->request->setData(['number' => 'some integer']);
+
+        // Laravel 5.6 changed the method validate method on the FormRequest to validateResolved.
+        if (true === version_compare($this->app->version(), '5.6', '>=')) {
+            $this->request->validateResolved();
+            return;
+        }
+
         $this->request->validate();
     }
 
@@ -48,6 +61,13 @@ class ApiRequestTest extends TestCase
 
         $this->request->setRules(['name' => 'string']);
         $this->request->replace(['name' => 'some name', 'title' => 'some title']);
+
+        // Laravel 5.6 changed the method validate method on the FormRequest to validateResolved.
+        if (true === version_compare($this->app->version(), '5.6', '>=')) {
+            $this->request->validateResolved();
+            return;
+        }
+
         $this->request->validate();
     }
 
