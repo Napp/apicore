@@ -5,6 +5,7 @@ namespace Napp\Core\Api\Tests\Unit;
 use Faker\Factory;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Pagination\Paginator;
+use Napp\Core\Api\Tests\Models\Category;
 use Napp\Core\Api\Transformers\ApiTransformer;
 use Napp\Core\Api\Tests\TestCase;
 
@@ -107,6 +108,42 @@ class ApiPaginatedTransformerTest extends TestCase
             $this->assertArrayHasKey('lastName', $item);
             $this->assertArrayHasKey('age', $item);
         }
+    }
+
+    public function test_transform_length_aware_paginated_with_relationships()
+    {
+        $category = Category::create(['title' => 'Electronics']);
+        $category->products()->create(['name' => 'iPhone', 'price'=> 100.0]);
+        $category->products()->create(['name' => 'Google Pixel', 'price'=> 80.0]);
+        $category->products()->create(['name' => 'Samsung Galaxy 9', 'price'=> 110.0]);
+
+        $category2 = Category::create(['title' => 'Computers']);
+        $category2->products()->create(['name' => 'Mac', 'price'=> 28860.0]);
+        $category2->products()->create(['name' => 'Windows', 'price'=> 11000.0]);
+
+        $input = Category::with('products')->get();
+
+        $paginatedInput = new LengthAwarePaginator($input, count($input) * 4, count($input));
+
+        $transformedOutput = $category->getTransformer()->transformOutput($paginatedInput);
+
+        $this->assertArrayHasKey('current_page', $transformedOutput);
+        $this->assertArrayHasKey('data', $transformedOutput);
+        $this->assertArrayHasKey('first_page_url', $transformedOutput);
+        $this->assertArrayHasKey('from', $transformedOutput);
+        $this->assertArrayHasKey('last_page', $transformedOutput);
+        $this->assertArrayHasKey('last_page_url', $transformedOutput);
+        $this->assertArrayHasKey('next_page_url', $transformedOutput);
+        $this->assertArrayHasKey('path', $transformedOutput);
+        $this->assertArrayHasKey('per_page', $transformedOutput);
+        $this->assertArrayHasKey('prev_page_url', $transformedOutput);
+        $this->assertArrayHasKey('to', $transformedOutput);
+        $this->assertArrayHasKey('total', $transformedOutput);
+
+        $this->assertEquals('iPhone', $transformedOutput['data'][0]['products'][0]['title']);
+        $this->assertEquals('Google Pixel', $transformedOutput['data'][0]['products'][1]['title']);
+        $this->assertEquals('Mac', $transformedOutput['data'][1]['products'][0]['title']);
+        $this->assertEquals('Windows', $transformedOutput['data'][1]['products'][1]['title']);
     }
 
 }
