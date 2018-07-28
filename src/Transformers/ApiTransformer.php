@@ -7,6 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 
+/**
+ * Class ApiTransformer
+ * @package Napp\Core\Api\Transformers
+ */
 class ApiTransformer implements TransformerInterface
 {
     /**
@@ -62,18 +66,80 @@ class ApiTransformer implements TransformerInterface
         $output = [];
 
         if (true === $data instanceof Collection) {
-            foreach ($data as $item) {
-                $output[] = $this->transformOutput($item);
-            }
+            $output = $this->transformCollection($output, $data);
+        } else if (true === $data instanceof Model) {
+            $output = $this->transformAttributes($output, $data->getAttributes());
+            $output = $this->transformRelationships($output, $data);
         } else {
             $data = (true === \is_array($data)) ? $data : $data->toArray();
-            foreach ($data as $key => $value) {
-                if (true === $this->strict && false === array_key_exists($key, $this->apiMapping)) {
+            $output = $this->transformAttributes($output, $data);
+        }
+
+        return $output;
+    }
+
+
+    /**
+     * @param array $output
+     * @param array $data
+     * @return array
+     */
+    protected function transformAttributes(array $output, array $data): array
+    {
+        foreach ($data as $key => $value) {
+            if (true === $this->strict && false === array_key_exists($key, $this->apiMapping)) {
+                continue;
+            }
+
+            $output[$this->findNewKey($key)] = $this->convertValueType($key, $value);
+        }
+
+        return $output;
+    }
+
+    /**
+     * @param array $output
+     * @param Model $data
+     * @return array
+     */
+    protected function transformRelationships(array $output, Model $data): array
+    {
+        /** @var Model $data */
+        $relationships = $data->getRelations();
+        foreach ($relationships as $relationshipName => $relationship) {
+            if (true === $relationship instanceof Collection) {
+                // do not transform empty relationships
+                if($relationship->isEmpty()) {
                     continue;
                 }
 
-                $output[$this->findNewKey($key)] = $this->convertValueType($key, $value);
+                if ($this->isTransformAware($relationship->first())) {
+                    $output[$relationshipName] = $relationship->first()->getTransformer()->transformOutput($relationship);
+                } else {
+                    $output[$relationshipName] = $relationship->toArray();
+                }
+            } else {
+                // model
+                if ($this->isTransformAware($relationship)) {
+                    $output[$relationshipName] = $relationship->getTransformer()->transformOutput($relationship);
+                } else {
+                    $output[$relationshipName] = $relationship->getAttributes();
+                }
             }
+        }
+
+        return $output;
+    }
+
+    /**
+     * @param array $output
+     * @param Collection $data
+     * @return array
+     */
+    protected function transformCollection(array $output, Collection $data): array
+    {
+        foreach ($data as $item) {
+            $output[] = $this->transformOutput($item);
         }
 
         return $output;
@@ -142,6 +208,10 @@ class ApiTransformer implements TransformerInterface
         }
     }
 
+    /**
+     * @param $type
+     * @return array
+     */
     protected static function parseStringDataType($type): array
     {
         $parameters = [];
@@ -171,6 +241,10 @@ class ApiTransformer implements TransformerInterface
         return str_getcsv($parameter);
     }
 
+    /**
+     * @param $type
+     * @return array
+     */
     protected static function parseManyDataTypes($type): array
     {
         $parsed = [];
@@ -184,6 +258,10 @@ class ApiTransformer implements TransformerInterface
         return $parsed;
     }
 
+    /**
+     * @param $type
+     * @return array
+     */
     protected static function normalizeType($type): array
     {
         if (false !== mb_strpos($type, '|')) {
@@ -217,6 +295,10 @@ class ApiTransformer implements TransformerInterface
         return $dataTypes;
     }
 
+    /**
+     * @param $type
+     * @return string
+     */
     protected static function normalizeDataType($type): string
     {
         switch ($type) {
@@ -229,5 +311,14 @@ class ApiTransformer implements TransformerInterface
             default:
                 return $type;
         }
+    }
+
+    /**
+     * @param $model
+     * @return bool
+     */
+    protected function isTransformAware($model): bool
+    {
+        return array_key_exists(TransformerAware::class, class_uses($model));
     }
 }

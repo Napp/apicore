@@ -2,31 +2,14 @@
 
 namespace Napp\Core\Api\Tests\Unit;
 
-use Napp\Core\Api\Tests\stubs\DataStub;
+use Napp\Core\Api\Tests\Models\Category;
+use Napp\Core\Api\Tests\Models\Product;
+use Napp\Core\Api\Tests\Transformers\ProductTransformer;
 use Napp\Core\Api\Transformers\ApiTransformer;
 use Napp\Core\Api\Tests\TestCase;
 
 class ApiTransformerTest extends TestCase
 {
-    /**
-     * Define environment setup.
-     *
-     * @param  \Illuminate\Foundation\Application   $app
-     *
-     * @return void
-     */
-    protected function getEnvironmentSetUp($app)
-    {
-        /** @var $app \Illuminate\Foundation\Application */
-        $app['config']->set('database.connections.testing', [
-            'driver' => 'sqlite',
-            'database' => ':memory:',
-            'prefix' => '',
-        ]);
-
-        $app['config']->set('database.default', 'testing');
-    }
-
     /**
      * @var ApiTransformer
      */
@@ -172,80 +155,64 @@ class ApiTransformerTest extends TestCase
         $this->assertSame($expectedOutput, $this->transformer->transformOutput($input));
     }
 
-    public function test_it_transforms_instances_if_transformeraware_interfaces()
+    public function test_transform_model_hasMany_relation_returns_transformed_relation_with_it()
     {
-        $this->transformer->setApiMapping([
-            'title' => ['newName' => 'title', 'dataType' => 'string'],
-            'relationship' => ['newName' => 'some-relationship', 'dataType' => 'relationship'],
-            'testing-relationship' => ['newName' => 'new-relationship', 'dataType' => 'relationship']
-        ]);
+        /** @var Category $category */
+        $category = Category::create(['title' => 'Electronics']);
+        $category->products()->create(['name' => 'iPhone', 'price'=> 100.0]);
+        $category->load('products');
+        $result = $category->getTransformer()->transformOutput($category);
 
-        $input = [
-            'title' => 'testing-123',
-            'relationship' => collect([
-                new DataStub([
-                    'title' => 'string',
-                    'array' => [
-                        [
-                            'name' => 'some-name'
-                        ],
-                        [
-                            'name' => 'some-name'
-                        ]
-                    ]
-                ]),
-                new DataStub([
-                    'title' => 'string',
-                    'array' => [
-                        [
-                            'name' => 'some-name'
-                        ],
-                        [
-                            'name' => 'some-name'
-                        ]
-                    ]
-                ])
-            ]),
-            'testing-relationship' => new DataStub([
-                'title' => 'string',
-                'array' => [
-                    [
-                        'name' => 'some-name'
-                    ],
-                    [
-                        'name' => 'some-name'
-                    ]
-                ]
-            ]),
-        ];
+        $this->assertArrayHasKey('products', $result);
+        $this->assertEquals('iPhone', $result['products'][0]['title']);
+    }
 
-        $output = $this->transformer->transformOutput($input);
+    public function test_empty_relation_returns_only_transformed_base_model()
+    {
+        /** @var Category $category */
+        $category = Category::create(['title' => 'Electronics']);
+        $category->load('products');
+        $result = $category->getTransformer()->transformOutput($category);
 
-        $this->assertEquals([
-            'title' => 'testing-123',
-            'some-relationship' => [
-                [
-                    'title' => 'string',
-                    'items' => [
-                        ['title' => 'some-name'],
-                        ['title' => 'some-name'],
-                    ]
-                ],
-                [
-                    'title' => 'string',
-                    'items' => [
-                        ['title' => 'some-name'],
-                        ['title' => 'some-name'],
-                    ]
-                ],
-            ],
-            'new-relationship' => [
-                'title' => 'string',
-                'items' => [
-                    ['title' => 'some-name'],
-                    ['title' => 'some-name'],
-                ]
-            ]
-        ], $output);
+        $this->assertArrayNotHasKey('products', $result);
+    }
+
+    public function test_without_relation_loaded_returns_only_transformed_base_model()
+    {
+        /** @var Category $category */
+        $category = Category::create(['title' => 'Electronics']);
+        $result = $category->getTransformer()->transformOutput($category);
+
+        $this->assertArrayNotHasKey('products', $result);
+    }
+
+    public function test_transform_collection_with_belongsTo_relation_transforms()
+    {
+        $category = Category::create(['title' => 'Electronics']);
+        $category->products()->create(['name' => 'iPhone', 'price'=> 100.0]);
+        $category->products()->create(['name' => 'Google Pixel', 'price'=> 80.0]);
+        $category->products()->create(['name' => 'Samsung Galaxy 9', 'price'=> 110.0]);
+
+        $products = Product::with('category')->get();
+        $result = app(ProductTransformer::class)->transformOutput($products);
+
+        $this->assertEquals('iPhone', $result[0]['title']);
+        $this->assertEquals('Electronics', $result[0]['category']['name']);
+        $this->assertEquals('Electronics', $result[1]['category']['name']);
+        $this->assertEquals('Electronics', $result[2]['category']['name']);
+
+        $category->load('products');
+        $result = $category->getTransformer()->transformOutput($category);
+        $this->assertCount(3, $result['products']);
+    }
+
+    public function test_transform_deeply_nested_relationships()
+    {
+        $category = Category::create(['title' => 'Electronics']);
+        $category->products()->create(['name' => 'iPhone', 'price'=> 100.0])->variants()->create(['name' => 'iPhone 8', 'sku_id' => 'IPHONE2233']);
+        $category->load(['products', 'products.variants']);
+        $result = $category->getTransformer()->transformOutput($category);
+
+        $this->assertEquals('iPhone 8', $result['products'][0]['variants'][0]['title']);
     }
 }
