@@ -7,13 +7,18 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Str;
 
+/**
+ * Class ApiTransformer
+ * @package Napp\Core\Api\Transformers
+ */
 class ApiTransformer implements TransformerInterface
 {
     /**
      * @var array
      */
-    protected $apiMapping = [];
+    public $apiMapping = [];
 
     /**
      * Strict mode removes keys that are
@@ -67,16 +72,65 @@ class ApiTransformer implements TransformerInterface
         }
 
         if (true === $data instanceof Collection) {
-            foreach ($data as $item) {
-                $output[] = $this->transformOutput($item);
-            }
+            $output = $this->transformCollection($output, $data);
+        } else if (true === $data instanceof Model) {
+            $output = $this->transformAttributes($output, $data->getAttributes());
+            $output = $this->transformRelationships($output, $data);
         } else {
             $data = (true === \is_array($data)) ? $data : $data->toArray();
-            foreach ($data as $key => $value) {
-                if (true === $this->strict && false === array_key_exists($key, $this->apiMapping)) {
+            $output = $this->transformAttributes($output, $data);
+        }
+
+        return $output;
+    }
+
+
+    /**
+     * @param array $output
+     * @param array $data
+     * @return array
+     */
+    protected function transformAttributes(array $output, array $data): array
+    {
+        foreach ($data as $key => $value) {
+            if (true === $this->strict && false === array_key_exists($key, $this->apiMapping)) {
+                continue;
+            }
+
+            $output[$this->findNewKey($key)] = $this->convertValueType($key, $value);
+        }
+
+        return $output;
+    }
+
+    /**
+     * @param array $output
+     * @param Model $data
+     * @return array
+     */
+    protected function transformRelationships(array $output, Model $data): array
+    {
+        /** @var Model $data */
+        $relationships = $data->getRelations();
+        foreach ($relationships as $relationshipName => $relationship) {
+            if (true === $relationship instanceof Collection) {
+                // do not transform empty relationships
+                if($relationship->isEmpty()) {
                     continue;
                 }
-                $output[$this->findNewKey($key)] = $this->convertValueType($key, $value);
+
+                if ($this->isTransformAware($relationship->first())) {
+                    $output[$relationshipName] = $relationship->first()->getTransformer()->transformOutput($relationship);
+                } else {
+                    $output[$relationshipName] = $relationship->toArray();
+                }
+            } else {
+                // model
+                if ($this->isTransformAware($relationship)) {
+                    $output[$relationshipName] = $relationship->getTransformer()->transformOutput($relationship);
+                } else {
+                    $output[$relationshipName] = $relationship->getAttributes();
+                }
             }
         }
 
@@ -90,6 +144,20 @@ class ApiTransformer implements TransformerInterface
         $result['data'] = $this->transformOutput($data->getCollection());
 
         return $result;
+    }
+
+    /**
+     * @param array $output
+     * @param Collection $data
+     * @return array
+     */
+    protected function transformCollection(array $output, Collection $data): array
+    {
+        foreach ($data as $item) {
+            $output[] = $this->transformOutput($item);
+        }
+
+        return $output;
     }
 
     /**
@@ -123,6 +191,7 @@ class ApiTransformer implements TransformerInterface
     /**
      * @param string $key
      * @param mixed $value
+     * @param string $newKey
      * @return mixed
      */
     protected function convertValueType(string $key, $value)
@@ -131,21 +200,140 @@ class ApiTransformer implements TransformerInterface
             ? $this->apiMapping[$key]['dataType']
             : 'string';
 
-        switch ($type) {
-            case 'datetime':
-                return strtotime($value) > 0 ? date("c", strtotime($value)) : '';
-            case 'int':
-                return (int) $value;
-            case 'bool':
-                return (bool) $value;
-            case 'array':
-                return (array) $value;
-            case 'json':
-                return json_decode($value);
-            case 'float':
-                return (float) $value;
-            default:
+        foreach (static::normalizeType($type) as list($method, $parameters)) {
+            if (true === empty($method)) {
                 return $value;
+            }
+
+            if ('Nullable' === $method) {
+                if (true === empty($value) && false === \is_numeric($value)) {
+                    return null;
+                }
+
+                continue;
+            }
+
+            $method = "convert{$method}";
+
+            if (false === method_exists(TransformerMethods::class, $method)) {
+                return $value;
+            }
+
+            return TransformerMethods::$method($value, $parameters);
         }
+    }
+
+    /**
+     * @param $type
+     * @return array
+     */
+    protected static function parseStringDataType($type): array
+    {
+        $parameters = [];
+
+        // The format for transforming data-types and parameters follows an
+        // easy {data-type}:{parameters} formatting convention. For instance the
+        // data-type "float:3" states that the value will be converted to a float with 3 decimals.
+        if (mb_strpos($type, ':') !== false) {
+            list($dataType, $parameter) = explode(':', $type, 2);
+
+            $parameters = static::parseParameters($parameter);
+        }
+
+        $dataType = static::normalizeDataType(trim($dataType ?? $type));
+
+        return [Str::studly($dataType), $parameters ?? []];
+    }
+
+    /**
+     * Parse a parameter list.
+     *
+     * @param  string  $parameter
+     * @return array
+     */
+    protected static function parseParameters($parameter): array
+    {
+        return str_getcsv($parameter);
+    }
+
+    /**
+     * @param $type
+     * @return array
+     */
+    protected static function parseManyDataTypes($type): array
+    {
+        $parsed = [];
+
+        $dataTypes = explode('|', $type);
+
+        foreach ($dataTypes as $dataType) {
+            $parsed[] = static::parseStringDataType(trim($dataType));
+        }
+
+        return $parsed;
+    }
+
+    /**
+     * @param $type
+     * @return array
+     */
+    protected static function normalizeType($type): array
+    {
+        if (false !== mb_strpos($type, '|')) {
+            return self::normalizeNullable(
+                static::parseManyDataTypes($type)
+            );
+        }
+
+        return [static::parseStringDataType(trim($type))];
+    }
+
+    /**
+     * @param $type
+     * @return bool
+     */
+    protected static function hasParameters($type): bool
+    {
+        return false !== mb_strpos($type, ':');
+    }
+
+    /**
+     * @param $dataTypes
+     * @return array
+     */
+    protected static function normalizeNullable($dataTypes): array
+    {
+        if (isset($dataTypes[1][0]) && $dataTypes[1][0] === 'Nullable') {
+            return array_reverse($dataTypes);
+        }
+
+        return $dataTypes;
+    }
+
+    /**
+     * @param $type
+     * @return string
+     */
+    protected static function normalizeDataType($type): string
+    {
+        switch ($type) {
+            case 'int':
+                return 'integer';
+            case 'bool':
+                return 'boolean';
+            case 'date':
+                return 'datetime';
+            default:
+                return $type;
+        }
+    }
+
+    /**
+     * @param $model
+     * @return bool
+     */
+    protected function isTransformAware($model): bool
+    {
+        return array_key_exists(TransformerAware::class, class_uses($model));
     }
 }
