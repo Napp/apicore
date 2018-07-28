@@ -126,6 +126,21 @@ class ApiController extends BaseController
         return $this->setResponseCode(204)
             ->respond(['message' => $message], $headers);
     }
+    
+        /**
+     * @param string $message
+     * @param array $headers
+     * @return JsonResponse
+     */
+    public function responseAccepted(
+        string $message = 'The request was accepted for processing',
+        array $headers = []
+    ): JsonResponse {
+
+        return $this->setResponseCode(202)
+            ->setStatusCode(224)
+            ->respond(['message' => $message], $headers);
+    }
 
     /**
      * @param array $headers

@@ -41,9 +41,9 @@ class ApiGuard extends TokenGuard
     }
 
     /**
-     * @return string
+     * @return stringi|null
      */
-    public function getTokenForRequest(): string
+    public function getTokenForRequest(): ?string
     {
         return $this->request->header(NappHttpHeaders::NAPP_API_KEY);
     }

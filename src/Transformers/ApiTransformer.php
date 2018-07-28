@@ -4,6 +4,8 @@ namespace Napp\Core\Api\Transformers;
 
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 
@@ -64,6 +66,10 @@ class ApiTransformer implements TransformerInterface
     public function transformOutput($data): array
     {
         $output = [];
+
+        if (true === $data instanceof LengthAwarePaginator || true === $data instanceof Paginator) {
+            return $this->transformPaginatedOutput($data);
+        }
 
         if (true === $data instanceof Collection) {
             $output = $this->transformCollection($output, $data);
@@ -129,6 +135,15 @@ class ApiTransformer implements TransformerInterface
         }
 
         return $output;
+    }
+
+    protected function transformPaginatedOutput($data): array
+    {
+        $result = $data->toArray();
+
+        $result['data'] = $this->transformOutput($data->getCollection());
+
+        return $result;
     }
 
     /**
