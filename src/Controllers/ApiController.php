@@ -200,6 +200,17 @@ class ApiController extends BaseController
      * @param string $message
      * @return JsonResponse
      */
+    public function responseUnauthorization(string $message = 'Authorization error. Requested resource is restricted.'): JsonResponse
+    {
+        return $this->setStatusCode(87)
+            ->setResponseCode(403)
+            ->respondWithError($message);
+    }
+
+    /**
+     * @param string $message
+     * @return JsonResponse
+     */
     public function responseForbidden(string $message = 'Forbidden.'): JsonResponse
     {
         return $this->setStatusCode(64)
