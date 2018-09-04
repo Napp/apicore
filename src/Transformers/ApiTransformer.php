@@ -93,7 +93,7 @@ class ApiTransformer implements TransformerInterface
     protected function transformAttributes(array $output, array $data): array
     {
         foreach ($data as $key => $value) {
-            if (true === $this->strict && false === array_key_exists($key, $this->apiMapping)) {
+            if (true === $this->strict && !$this->isMapped($key)) {
                 continue;
             }
 
@@ -113,9 +113,12 @@ class ApiTransformer implements TransformerInterface
         /** @var Model $data */
         $relationships = $data->getRelations();
         foreach ($relationships as $relationshipName => $relationship) {
-            if (true === $relationship instanceof Collection) {
+            if (null === $relationship) {
+                $output[$relationshipName] = $this->isMapped($relationshipName) ? $this->convertValueType($relationshipName, null) : null;
+            }
+            else if (true === $relationship instanceof Collection) {
                 // do not transform empty relationships
-                if($relationship->isEmpty()) {
+                if ($relationship->isEmpty()) {
                     continue;
                 }
 
@@ -124,7 +127,8 @@ class ApiTransformer implements TransformerInterface
                 } else {
                     $output[$relationshipName] = $relationship->toArray();
                 }
-            } else {
+            }
+            else {
                 // model
                 if ($this->isTransformAware($relationship)) {
                     $output[$relationshipName] = $relationship->getTransformer()->transformOutput($relationship);
@@ -335,5 +339,15 @@ class ApiTransformer implements TransformerInterface
     protected function isTransformAware($model): bool
     {
         return array_key_exists(TransformerAware::class, class_uses($model));
+    }
+
+    /**
+     * Check if key is mapped with apiMapping
+     * @param $key
+     * @return bool
+     */
+    protected function isMapped($key): bool
+    {
+        return true === array_key_exists($key, $this->apiMapping);
     }
 }
