@@ -114,6 +114,20 @@ class TestCase extends \Orchestra\Testbench\TestCase
                 $table->timestamps();
             });
         }
+
+        if ( ! Schema::hasTable('posts')) {
+            Schema::create('posts', function (Blueprint $table) {
+                $table->increments('id');
+                $table->string('title');
+                $table->text('desc');
+                $table->json('tags');
+                $table->text('other_tags')->nullable();
+                $table->integer('owner')->nullable();
+                $table->uuid('uuid')->nullable();
+                $table->timestamps();
+            });
+
+        }
     }
 
     /**

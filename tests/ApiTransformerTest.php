@@ -3,7 +3,9 @@
 namespace Napp\Core\Api\Tests\Unit;
 
 use Napp\Core\Api\Tests\Models\Category;
+use Napp\Core\Api\Tests\Models\Post;
 use Napp\Core\Api\Tests\Models\Product;
+use Napp\Core\Api\Tests\Transformers\PostTransformer;
 use Napp\Core\Api\Tests\Transformers\ProductTransformer;
 use Napp\Core\Api\Transformers\ApiTransformer;
 use Napp\Core\Api\Tests\TestCase;
@@ -42,7 +44,7 @@ class ApiTransformerTest extends TestCase
             'price' => '1000'
         ];
 
-        $expectedInput = [
+        $expected = [
             'id' => 1,
             'name' => 'Wayne Industries',
             'has_access' => 0,
@@ -52,7 +54,7 @@ class ApiTransformerTest extends TestCase
         ];
         $transformedInput = $this->transformer->transformInput($input);
 
-        $this->assertEquals($expectedInput, $transformedInput);
+        $this->assertEquals($expected, $transformedInput);
     }
 
     public function test_strict_output_transforming()
@@ -181,7 +183,7 @@ class ApiTransformerTest extends TestCase
     public function test_the_datatype_is_nullable()
     {
         $this->transformer->setApiMapping([
-            'price' => ['newName' => 'price', 'dataType' => 'nullable|int']
+            'price' => ['newName' => 'price_new', 'dataType' => 'nullable|int']
         ]);
 
         $input = [
@@ -189,7 +191,7 @@ class ApiTransformerTest extends TestCase
         ];
 
         $expectedOutput = [
-            'price' => 100
+            'price_new' => 100
         ];
 
         $this->assertSame($expectedOutput, $this->transformer->transformOutput($input));
@@ -199,7 +201,7 @@ class ApiTransformerTest extends TestCase
         ];
 
         $expectedOutput = [
-            'price' => 0
+            'price_new' => 0
         ];
 
         $this->assertSame($expectedOutput, $this->transformer->transformOutput($input));
@@ -295,5 +297,22 @@ class ApiTransformerTest extends TestCase
         $result = $category->getTransformer()->transformOutput($category);
 
         $this->assertEquals('iPhone 8', $result['products'][0]['variants'][0]['title']);
+    }
+    
+    public function test_transform_not_strict_model()
+    {
+        $post = Post::create([
+            'title' => 'My First post',
+            'desc' => 'body text',
+            'tags' => [2, '222', 'wow'],
+            'other_tags' => null,
+            'owner' => 34,
+            'uuid' => '66220588-c944-3425-a3ea-0fc80f8c32fe'
+        ]);
+        $result = app(PostTransformer::class)->transformOutput($post);
+
+        $this->assertArrayNotHasKey('updated_at', $result);
+        $this->assertEquals(3, count($result['tags']));
+        $this->assertNull($result['otherTags']);
     }
 }

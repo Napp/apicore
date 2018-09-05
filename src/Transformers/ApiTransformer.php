@@ -74,7 +74,7 @@ class ApiTransformer implements TransformerInterface
         if (true === $data instanceof Collection) {
             $output = $this->transformCollection($output, $data);
         } else if (true === $data instanceof Model) {
-            $output = $this->transformAttributes($output, $data->getAttributes());
+            $output = $this->transformAttributes($output, $data->attributesToArray());
             $output = $this->transformRelationships($output, $data);
         } else {
             $data = (true === \is_array($data)) ? $data : $data->toArray();
