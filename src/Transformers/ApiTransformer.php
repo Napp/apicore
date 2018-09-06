@@ -205,7 +205,7 @@ class ApiTransformer implements TransformerInterface
     {
         $type = (true === array_key_exists($key, $this->apiMapping))
             ? $this->apiMapping[$key]['dataType']
-            : 'string';
+            : 'unknown';
 
         foreach (static::normalizeType($type) as list($method, $parameters)) {
             if (true === empty($method)) {
