@@ -5,6 +5,10 @@ namespace Napp\Core\Api\Exceptions\Renderer;
 use Illuminate\Http\JsonResponse;
 use Napp\Core\Api\Exceptions\Exceptions\Exception as NappException;
 
+/**
+ * Class Renderer
+ * @package Napp\Core\Api\Exceptions\Renderer
+ */
 class Renderer implements RendererInterface
 {
     /**

@@ -6,12 +6,17 @@ use Exception;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Napp\Core\Api\Exceptions\Exceptions\ApiInternalCallValidationException;
 
+/**
+ * Class ApiHandler
+ * @package Napp\Core\Api\Exceptions
+ */
 class ApiHandler extends ExceptionHandler
 {
     /**
      * @param \Illuminate\Http\Request $request
      * @param \Exception $e
      * @return \Illuminate\Http\Response|\Illuminate\Http\JsonResponse
+     * @throws \ReflectionException
      */
     public function render($request, Exception $e)
     {

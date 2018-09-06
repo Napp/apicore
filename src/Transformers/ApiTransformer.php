@@ -141,6 +141,10 @@ class ApiTransformer implements TransformerInterface
         return $output;
     }
 
+    /**
+     * @param $data
+     * @return array
+     */
     protected function transformPaginatedOutput($data): array
     {
         $result = $data->toArray();
@@ -195,7 +199,6 @@ class ApiTransformer implements TransformerInterface
     /**
      * @param string $key
      * @param mixed $value
-     * @param string $newKey
      * @return mixed
      */
     protected function convertValueType(string $key, $value)

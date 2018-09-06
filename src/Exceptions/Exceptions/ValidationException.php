@@ -2,6 +2,10 @@
 
 namespace Napp\Core\Api\Exceptions\Exceptions;
 
+/**
+ * Class ValidationException
+ * @package Napp\Core\Api\Exceptions\Exceptions
+ */
 class ValidationException extends Exception
 {
     /**

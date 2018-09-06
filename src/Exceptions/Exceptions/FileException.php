@@ -4,6 +4,10 @@ namespace Napp\Core\Api\Exceptions\Exceptions;
 
 use Exception;
 
+/**
+ * Class FileException
+ * @package Napp\Core\Api\Exceptions\Exceptions
+ */
 class FileException extends Exception
 {
     /**

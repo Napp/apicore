@@ -4,6 +4,10 @@ namespace Napp\Core\Api\Exceptions\Exceptions;
 
 use Symfony\Component\HttpFoundation\Response;
 
+/**
+ * Class ApiInternalCallException
+ * @package Napp\Core\Api\Exceptions\Exceptions
+ */
 class ApiInternalCallException extends \RuntimeException
 {
     /**

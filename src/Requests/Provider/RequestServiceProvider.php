@@ -6,6 +6,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\ServiceProvider;
 use Napp\Core\Api\Auth\NappHttpHeaders;
 
+/**
+ * Class RequestServiceProvider
+ * @package Napp\Core\Api\Requests\Provider
+ */
 class RequestServiceProvider extends ServiceProvider
 {
     public function boot()

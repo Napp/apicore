@@ -6,6 +6,10 @@ use Illuminate\Auth\TokenGuard;
 use Illuminate\Contracts\Auth\UserProvider;
 use Illuminate\Http\Request;
 
+/**
+ * Class ApiGuard
+ * @package Napp\Core\Api\Auth
+ */
 class ApiGuard extends TokenGuard
 {
     /**
@@ -41,7 +45,7 @@ class ApiGuard extends TokenGuard
     }
 
     /**
-     * @return stringi|null
+     * @return string|null
      */
     public function getTokenForRequest(): ?string
     {

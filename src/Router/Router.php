@@ -6,6 +6,10 @@ use Illuminate\Foundation\Application;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Router as LaravelRouter;
 
+/**
+ * Class Router
+ * @package Napp\Core\Api\Router
+ */
 class Router
 {
     private $app;
@@ -103,10 +107,11 @@ class Router
     /**
      * @param  string $method
      * @param  string $uri
-     * @param  array  $data
-     * @param  array  $headers
+     * @param  array $data
+     * @param  array $headers
      * @param  string $content
      * @return \Illuminate\Http\Response
+     * @throws \Exception
      */
     public function singleRequest($method, $uri, array $data = [], array $headers = [], $content = null)
     {
@@ -133,6 +138,11 @@ class Router
         return $response;
     }
 
+    /**
+     * @param array $default
+     * @param array $headers
+     * @return array
+     */
     private function overrideHeaders(array $default, array $headers)
     {
         $headers = $this->transformHeadersToUppercaseUnderscoreType($headers);
@@ -152,10 +162,11 @@ class Router
     /**
      * @param  string $method
      * @param  string $uri
-     * @param  array  $data
-     * @param  array  $headers
+     * @param  array $data
+     * @param  array $headers
      * @param  string $content
      * @return \Illuminate\Http\Response
+     * @throws \Exception
      */
     private function request($method, $uri, array $data = [], array $headers = [], $content = null)
     {
@@ -183,6 +194,10 @@ class Router
         return $this->request->create($uri, $method, $data, [], [], $server, $content);
     }
 
+    /**
+     * @param $headers
+     * @return array
+     */
     private function transformHeadersToUppercaseUnderscoreType($headers)
     {
         $transformed = [];

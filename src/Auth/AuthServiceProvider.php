@@ -5,6 +5,10 @@ namespace Napp\Core\Api\Auth;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\ServiceProvider;
 
+/**
+ * Class AuthServiceProvider
+ * @package Napp\Core\Api\Auth
+ */
 class AuthServiceProvider extends ServiceProvider
 {
     /**

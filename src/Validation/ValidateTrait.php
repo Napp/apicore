@@ -6,6 +6,10 @@ use Illuminate\Contracts\Validation\Factory as ValidatorFactory;
 use Illuminate\Contracts\Validation\Validator;
 use Napp\Core\Api\Exceptions\Exceptions\ValidationException;
 
+/**
+ * Trait ValidateTrait
+ * @package Napp\Core\Api\Validation
+ */
 trait ValidateTrait
 {
     /**

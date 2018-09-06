@@ -4,6 +4,10 @@ namespace Napp\Core\Api\Exceptions\Renderer;
 
 use Illuminate\Http\JsonResponse;
 
+/**
+ * Interface RendererInterface
+ * @package Napp\Core\Api\Exceptions\Renderer
+ */
 interface RendererInterface
 {
     /**

@@ -4,6 +4,10 @@ namespace Napp\Core\Api\Exceptions\Renderer;
 
 use Illuminate\Http\JsonResponse;
 
+/**
+ * Class DebugRenderer
+ * @package Napp\Core\Api\Exceptions\Renderer
+ */
 class DebugRenderer implements RendererInterface
 {
     /**
@@ -36,7 +40,7 @@ class DebugRenderer implements RendererInterface
             'error' => [
                 'code' => $this->statusCode,
                 'message' => $this->statusMessage,
-                'type' => get_class($this->exception),
+                'type' => \get_class($this->exception),
                 'file' => $this->exception->getFile(),
                 'line' => $this->exception->getLine(),
                 'trace' => $this->formatTrace($this->exception->getTrace())
@@ -90,7 +94,7 @@ class DebugRenderer implements RendererInterface
     protected function formatTrace(array $trace)
     {
         foreach ($trace as &$t) {
-            $t = array_except($t, ['args']);
+            $t = \array_except($t, ['args']);
         }
 
         return $trace;

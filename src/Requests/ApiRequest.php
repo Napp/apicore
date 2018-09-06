@@ -10,10 +10,15 @@ use Napp\Core\Api\Exceptions\Exceptions\ValidationException;
 use Napp\Core\Api\Transformers\ApiTransformer;
 use Napp\Core\Api\Transformers\TransformerInterface;
 
+/**
+ * Class ApiRequest
+ * @package Napp\Core\Api\Requests
+ */
 abstract class ApiRequest extends FormRequest
 {
     /**
      * @return Validator
+     * @throws \Napp\Core\Api\Exceptions\Exceptions\InvalidFieldException
      */
     protected function getValidatorInstance()
     {
@@ -26,7 +31,9 @@ abstract class ApiRequest extends FormRequest
     /**
      * @param Validator $validator
      * @return void
-     * @throws ValidationException
+     * @throws \Illuminate\Validation\ValidationException
+     * @throws \Napp\Core\Api\Exceptions\Exceptions\ApiInternalCallValidationException
+     * @throws \Napp\Core\Api\Exceptions\Exceptions\ValidationException
      */
     protected function failedValidation(Validator $validator)
     {
@@ -41,7 +48,7 @@ abstract class ApiRequest extends FormRequest
      * @return void
      * @throws InvalidFieldException
      */
-    protected function validateInputFields()
+    protected function validateInputFields(): void
     {
         $input = $this->input();
         $rules = $this->rules();
@@ -110,12 +117,12 @@ abstract class ApiRequest extends FormRequest
      * @return void
      * @throws ApiInternalCallValidationException
      */
-    protected function handleApiInternalCallFailedValidation(Validator $validator)
+    protected function handleApiInternalCallFailedValidation(Validator $validator): void
     {
         $input = $this->getTransformer()->transformOutput($this->except($this->dontFlash));
         $errors = collect($this->getTransformer()->transformOutput($validator->getMessageBag()->toArray()))
             ->reject(function ($error) {
-                return false === is_array($error);
+                return false === \is_array($error);
             })
             ->toArray();
 

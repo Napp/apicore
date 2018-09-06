@@ -8,6 +8,10 @@ use Napp\Core\Api\Exceptions\Renderer\Renderer;
 use Napp\Core\Api\Exceptions\Renderer\RendererInterface;
 use Illuminate\Http\JsonResponse;
 
+/**
+ * Class NappApiHandler
+ * @package Napp\Core\Api\Exceptions
+ */
 class NappApiHandler
 {
     /**
@@ -17,6 +21,7 @@ class NappApiHandler
 
     /**
      * @param \Exception $e
+     * @throws \ReflectionException
      */
     public function __construct(\Exception $e)
     {
@@ -44,22 +49,22 @@ class NappApiHandler
      * @param \Exception $e
      * @return int
      */
-    protected function getResponseCode(\Exception $e)
+    protected function getResponseCode(\Exception $e): ?int
     {
         if (true === $e instanceof NappException) {
             /** @var NappException $e */
             return $e->getResponseCode();
         }
 
-        if (true === method_exists($e, 'getStatusCode')) {
+        if (true === \method_exists($e, 'getStatusCode')) {
             return $e->getStatusCode();
         }
         
-        if (property_exists($e, 'status')) {
+        if (\property_exists($e, 'status')) {
             return $e->status;
         }
 
-        switch (last(explode('\\', get_class($e)))) {
+        switch (last(explode('\\', \get_class($e)))) {
             case 'ModelNotFoundException':
                 return 404;
             default:
@@ -71,7 +76,7 @@ class NappApiHandler
      * @param \Exception $e
      * @return int
      */
-    protected function getStatusCode(\Exception $e)
+    protected function getStatusCode(\Exception $e): ?int
     {
         if (true === $e instanceof NappException) {
             /** @var NappException $e */
@@ -101,8 +106,9 @@ class NappApiHandler
     /**
      * @param \Exception $e
      * @return string
+     * @throws \ReflectionException
      */
-    protected function getStatusMessage(\Exception $e)
+    protected function getStatusMessage(\Exception $e): string
     {
         if (true === $e instanceof NappException) {
             /** @var NappException $e */

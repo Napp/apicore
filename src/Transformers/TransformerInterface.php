@@ -4,6 +4,10 @@ namespace Napp\Core\Api\Transformers;
 
 use Illuminate\Contracts\Support\Arrayable;
 
+/**
+ * Interface TransformerInterface
+ * @package Napp\Core\Api\Transformers
+ */
 interface TransformerInterface
 {
     /**

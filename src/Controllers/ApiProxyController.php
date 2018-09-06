@@ -5,6 +5,10 @@ namespace Napp\Core\Api\Controllers;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
+/**
+ * Class ApiProxyController
+ * @package Napp\Core\Api\Controllers
+ */
 class ApiProxyController extends ApiInternalController
 {
     /**
@@ -30,7 +34,7 @@ class ApiProxyController extends ApiInternalController
         $arguments = $request->all();
         $url = "/api/{$endpoint}";
 
-        $methodSupportsArguments = in_array($requestMethod, ['post', 'put', 'patch']);
+        $methodSupportsArguments = \in_array($requestMethod, ['post', 'put', 'patch']);
         $callArguments = [$url];
 
         if (true === $methodSupportsArguments) {

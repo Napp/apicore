@@ -9,6 +9,10 @@ use Napp\Core\Api\Exceptions\Exceptions\ApiInternalCallException;
 use Napp\Core\Api\Router\Router;
 use Napp\Core\Api\Auth\NappHttpHeaders;
 
+/**
+ * Class ApiInternalController
+ * @package Napp\Core\Api\Controllers
+ */
 class ApiInternalController extends BaseController
 {
     /**

@@ -6,6 +6,10 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
 
+/**
+ * Class ApiController
+ * @package Napp\Core\Api\Controllers
+ */
 class ApiController extends BaseController
 {
     /**
@@ -60,7 +64,7 @@ class ApiController extends BaseController
      * @param string $currentETag
      * @return JsonResponse
      */
-    public function checkETag($currentETag)
+    public function checkETag($currentETag): ?JsonResponse
     {
         $newETag = request('ETag');
 

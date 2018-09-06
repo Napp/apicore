@@ -5,6 +5,10 @@ namespace Napp\Core\Api\Transformers;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Support\Arr;
 
+/**
+ * Class NoneTransformer
+ * @package Napp\Core\Api\Transformers
+ */
 class NoneTransformer implements TransformerInterface
 {
     /**

@@ -4,6 +4,10 @@ namespace Napp\Core\Api\Middleware;
 
 use Closure;
 
+/**
+ * Class ETag
+ * @package Napp\Core\Api\Middleware
+ */
 class ETag
 {
     /**

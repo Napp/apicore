@@ -2,6 +2,10 @@
 
 namespace Napp\Core\Api\Exceptions\Exceptions;
 
+/**
+ * Class AuthorizationException
+ * @package Napp\Core\Api\Exceptions\Exceptions
+ */
 class AuthorizationException extends Exception
 {
     /**
