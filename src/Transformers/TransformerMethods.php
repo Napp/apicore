@@ -64,7 +64,24 @@ class TransformerMethods
      */
     public static function convertArray($value): array
     {
+        if (\method_exists($value, 'toArray')) {
+            return $value->toArray();
+        }
+
         return (array) $value;
+    }
+
+    /**
+     * @param $value
+     * @return mixed|object
+     */
+    public static function convertObject($value)
+    {
+        if ($value instanceof \JsonSerializable) {
+            return $value->jsonSerialize();
+        }
+
+        return (object) $value;
     }
 
     /**

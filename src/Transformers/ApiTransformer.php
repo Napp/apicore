@@ -117,8 +117,8 @@ class ApiTransformer implements TransformerInterface
                 $output[$relationshipName] = $this->isMapped($relationshipName) ? $this->convertValueType($relationshipName, null) : null;
             }
             else if (true === $relationship instanceof Collection) {
-                // do not transform empty relationships
                 if ($relationship->isEmpty()) {
+                    $output[$relationshipName] = $this->isMapped($relationshipName) ? $this->convertValueType($relationshipName, null) : null;
                     continue;
                 }
 
