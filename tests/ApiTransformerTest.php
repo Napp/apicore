@@ -250,14 +250,13 @@ class ApiTransformerTest extends TestCase
         $this->assertEquals('iPhone', $result['products'][0]['title']);
     }
 
-    public function test_empty_relation_returns_only_transformed_base_model()
+    public function test_empty_relation_returns_null()
     {
         /** @var Category $category */
         $category = Category::create(['title' => 'Electronics']);
         $category->load('products');
         $result = $category->getTransformer()->transformOutput($category);
-
-        $this->assertArrayNotHasKey('products', $result);
+        $this->assertNull($result['products']);
     }
 
     public function test_without_relation_loaded_returns_only_transformed_base_model()
