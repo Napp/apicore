@@ -84,6 +84,20 @@ class ApiTransformer implements TransformerInterface
         return $output;
     }
 
+    /**
+     * @param array $data
+     * @return array
+     */
+    public function transformOutputKeys(array $data): array
+    {
+        $output = [];
+        foreach ($data as $key => $value) {
+            $output[$this->findNewKey($key)] = $value;
+        }
+
+        return $output;
+    }
+
 
     /**
      * @param array $output

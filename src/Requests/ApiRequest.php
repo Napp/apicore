@@ -120,7 +120,7 @@ abstract class ApiRequest extends FormRequest
     protected function handleApiInternalCallFailedValidation(Validator $validator): void
     {
         $input = $this->getTransformer()->transformOutput($this->except($this->dontFlash));
-        $errors = collect($this->getTransformer()->transformOutput($validator->getMessageBag()->toArray()))
+        $errors = collect($this->getTransformer()->transformOutputKeys($validator->getMessageBag()->toArray()))
             ->reject(function ($error) {
                 return false === \is_array($error);
             })

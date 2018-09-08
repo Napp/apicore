@@ -36,4 +36,13 @@ class NoneTransformer implements TransformerInterface
 
         return Arr::wrap($data);
     }
+
+    /**
+     * @param array $data
+     * @return array
+     */
+    public function transformOutputKeys(array $data): array
+    {
+        return $data;
+    }
 }

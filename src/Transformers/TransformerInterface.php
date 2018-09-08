@@ -21,4 +21,10 @@ interface TransformerInterface
      * @return array
      */
     public function transformOutput($data): array;
+
+    /**
+     * @param array $data
+     * @return array
+     */
+    public function transformOutputKeys(array $data): array;
 }
