@@ -11,7 +11,7 @@ use Napp\Core\Api\Transformers\ApiTransformer;
  */
 class ProductTransformer extends ApiTransformer
 {
-    protected $strict = true;
+
     /**
      * @param Product $product
      */

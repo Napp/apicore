@@ -127,27 +127,31 @@ class ApiTransformer implements TransformerInterface
         /** @var Model $data */
         $relationships = $data->getRelations();
         foreach ($relationships as $relationshipName => $relationship) {
-            if (null === $relationship) {
-                $output[$relationshipName] = $this->isMapped($relationshipName) ? $this->convertValueType($relationshipName, null) : null;
+            if (true === $this->strict && ! $this->isMapped($relationshipName)) {
+                continue;
             }
-            else if (true === $relationship instanceof Collection) {
+
+            $outputKey = $this->findNewKey($relationshipName);
+
+            if (null === $relationship) {
+                $output[$outputKey] = $this->convertValueType($relationshipName, null);
+            } elseif (true === $relationship instanceof Collection) {
                 if ($relationship->isEmpty()) {
-                    $output[$relationshipName] = $this->isMapped($relationshipName) ? $this->convertValueType($relationshipName, null) : null;
+                    $output[$outputKey] = $this->convertValueType($relationshipName, null);
                     continue;
                 }
 
                 if ($this->isTransformAware($relationship->first())) {
-                    $output[$relationshipName] = $relationship->first()->getTransformer()->transformOutput($relationship);
+                    $output[$outputKey] = $relationship->first()->getTransformer()->transformOutput($relationship);
                 } else {
-                    $output[$relationshipName] = $relationship->toArray();
+                    $output[$outputKey] = $relationship->toArray();
                 }
-            }
-            else {
+            } else {
                 // model
                 if ($this->isTransformAware($relationship)) {
-                    $output[$relationshipName] = $relationship->getTransformer()->transformOutput($relationship);
+                    $output[$outputKey] = $relationship->getTransformer()->transformOutput($relationship);
                 } else {
-                    $output[$relationshipName] = $relationship->getAttributes();
+                    $output[$outputKey] = $relationship->getAttributes();
                 }
             }
         }
