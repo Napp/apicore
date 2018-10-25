@@ -127,12 +127,15 @@ class ApiTransformer implements TransformerInterface
         /** @var Model $data */
         $relationships = $data->getRelations();
         foreach ($relationships as $relationshipName => $relationship) {
-            if (null === $relationship) {
-                $output[$relationshipName] = $this->isMapped($relationshipName) ? $this->convertValueType($relationshipName, null) : null;
+            if (true === $this->strict && ! $this->isMapped($relationshipName)) {
+                continue;
             }
-            else if (true === $relationship instanceof Collection) {
+
+            if (null === $relationship) {
+                $output[$relationshipName] = $this->convertValueType($relationshipName, null);
+            } elseif (true === $relationship instanceof Collection) {
                 if ($relationship->isEmpty()) {
-                    $output[$relationshipName] = $this->isMapped($relationshipName) ? $this->convertValueType($relationshipName, null) : null;
+                    $output[$relationshipName] = $this->convertValueType($relationshipName, null);
                     continue;
                 }
 
@@ -141,8 +144,7 @@ class ApiTransformer implements TransformerInterface
                 } else {
                     $output[$relationshipName] = $relationship->toArray();
                 }
-            }
-            else {
+            } else {
                 // model
                 if ($this->isTransformAware($relationship)) {
                     $output[$relationshipName] = $relationship->getTransformer()->transformOutput($relationship);

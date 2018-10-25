@@ -11,7 +11,7 @@ use Napp\Core\Api\Transformers\ApiTransformer;
  */
 class PostTransformer extends ApiTransformer
 {
-    protected $strict = false;
+
     /**
      * @param Post $post
      */

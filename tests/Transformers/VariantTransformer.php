@@ -11,7 +11,7 @@ use Napp\Core\Api\Transformers\ApiTransformer;
  */
 class VariantTransformer extends ApiTransformer
 {
-    protected $strict = true;
+
     /**
      * @param Variant $variant
      */

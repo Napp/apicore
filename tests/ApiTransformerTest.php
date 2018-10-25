@@ -5,6 +5,7 @@ namespace Napp\Core\Api\Tests\Unit;
 use Napp\Core\Api\Tests\Models\Category;
 use Napp\Core\Api\Tests\Models\Post;
 use Napp\Core\Api\Tests\Models\Product;
+use Napp\Core\Api\Tests\Transformers\CategoryStrictTransformer;
 use Napp\Core\Api\Tests\Transformers\PostTransformer;
 use Napp\Core\Api\Tests\Transformers\ProductTransformer;
 use Napp\Core\Api\Transformers\ApiTransformer;
@@ -313,5 +314,17 @@ class ApiTransformerTest extends TestCase
         $this->assertArrayNotHasKey('updated_at', $result);
         $this->assertEquals(3, count($result['tags']));
         $this->assertNull($result['otherTags']);
+    }
+
+    public function test_transform_model_relations_is_exluded_if_not_found_in_transform_map_and_strict_mode_is_enabled()
+    {
+        /** @var Category $category */
+        $category = Category::create(['title' => 'Electronics']);
+        $category->products()->create(['name' => 'iPhone', 'price'=> 100.0]);
+        $category->load('products');
+
+        $result = (new CategoryStrictTransformer())->transformOutput($category);
+
+        $this->assertArrayNotHasKey('products', $result);
     }
 }
