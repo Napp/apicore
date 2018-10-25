@@ -6,6 +6,7 @@ use Napp\Core\Api\Tests\Models\Category;
 use Napp\Core\Api\Tests\Models\Post;
 use Napp\Core\Api\Tests\Models\Product;
 use Napp\Core\Api\Tests\Transformers\CategoryStrictTransformer;
+use Napp\Core\Api\Tests\Transformers\CategoryTransformerWithDifferentOutputKey;
 use Napp\Core\Api\Tests\Transformers\PostTransformer;
 use Napp\Core\Api\Tests\Transformers\ProductTransformer;
 use Napp\Core\Api\Transformers\ApiTransformer;
@@ -323,8 +324,21 @@ class ApiTransformerTest extends TestCase
         $category->products()->create(['name' => 'iPhone', 'price'=> 100.0]);
         $category->load('products');
 
-        $result = (new CategoryStrictTransformer())->transformOutput($category);
+        $result = (new CategoryStrictTransformer)->transformOutput($category);
 
         $this->assertArrayNotHasKey('products', $result);
+    }
+
+    public function test_transform_model_relations_with_different_output_key()
+    {
+        /** @var Category $category */
+        $category = Category::create(['title' => 'Electronics']);
+        $category->products()->create(['name' => 'iPhone', 'price'=> 100.0]);
+        $category->load('products');
+
+        $result = (new CategoryTransformerWithDifferentOutputKey)->transformOutput($category);
+
+        $this->assertArrayNotHasKey('products', $result);
+        $this->assertArrayHasKey('indexes', $result);
     }
 }

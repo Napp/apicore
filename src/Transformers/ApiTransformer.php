@@ -131,25 +131,27 @@ class ApiTransformer implements TransformerInterface
                 continue;
             }
 
+            $outputKey = $this->findNewKey($relationshipName);
+
             if (null === $relationship) {
-                $output[$relationshipName] = $this->convertValueType($relationshipName, null);
+                $output[$outputKey] = $this->convertValueType($relationshipName, null);
             } elseif (true === $relationship instanceof Collection) {
                 if ($relationship->isEmpty()) {
-                    $output[$relationshipName] = $this->convertValueType($relationshipName, null);
+                    $output[$outputKey] = $this->convertValueType($relationshipName, null);
                     continue;
                 }
 
                 if ($this->isTransformAware($relationship->first())) {
-                    $output[$relationshipName] = $relationship->first()->getTransformer()->transformOutput($relationship);
+                    $output[$outputKey] = $relationship->first()->getTransformer()->transformOutput($relationship);
                 } else {
-                    $output[$relationshipName] = $relationship->toArray();
+                    $output[$outputKey] = $relationship->toArray();
                 }
             } else {
                 // model
                 if ($this->isTransformAware($relationship)) {
-                    $output[$relationshipName] = $relationship->getTransformer()->transformOutput($relationship);
+                    $output[$outputKey] = $relationship->getTransformer()->transformOutput($relationship);
                 } else {
-                    $output[$relationshipName] = $relationship->getAttributes();
+                    $output[$outputKey] = $relationship->getAttributes();
                 }
             }
         }
