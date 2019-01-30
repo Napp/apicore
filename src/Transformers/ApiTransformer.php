@@ -60,7 +60,7 @@ class ApiTransformer implements TransformerInterface
     }
 
     /**
-     * @param array|Arrayable $data
+     * @param array|Arrayable|LengthAwarePaginator|Paginator $data
      * @return array
      */
     public function transformOutput($data): array
@@ -165,11 +165,26 @@ class ApiTransformer implements TransformerInterface
      */
     protected function transformPaginatedOutput($data): array
     {
-        $result = $data->toArray();
+        $items = $this->transformOutput($data->getCollection());
 
-        $result['data'] = $this->transformOutput($data->getCollection());
+        $output = [
+            'data' => $items,
+            'pagination' => [
+                'currentPage' => $data->currentPage(),
+                'perPage' => $data->perPage(),
+                'firstPageUrl' => $data->url(1),
+                'nextPageUrl' => $data->nextPageUrl(),
+                'prevPageUrl' => $data->previousPageUrl()
+            ]
+        ];
 
-        return $result;
+        if (true === $data instanceof LengthAwarePaginator) {
+            $output['pagination']['totalPages'] = $data->lastPage();
+            $output['pagination']['total'] = $data->total();
+            $output['pagination']['lastPageUrl'] = $data->url($data->lastPage());
+        }
+
+        return $output;
     }
 
     /**

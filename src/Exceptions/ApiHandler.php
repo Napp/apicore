@@ -3,6 +3,7 @@
 namespace Napp\Core\Api\Exceptions;
 
 use Exception;
+use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Napp\Core\Api\Exceptions\Exceptions\ApiInternalCallValidationException;
 
@@ -37,6 +38,15 @@ class ApiHandler extends ExceptionHandler
             ], 400);
 
             return $response->withException($e);
+        }
+
+        if ($e instanceof AuthenticationException) {
+            return response()->json([
+                'error' => [
+                    'code' => 64,
+                    'message' => 'Forbidden'
+                ]
+            ], 403);
         }
 
         return (new NappApiHandler($e))->render();

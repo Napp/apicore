@@ -311,4 +311,32 @@ class ApiController extends BaseController
     {
         return (int) $request->get('offset', 0);
     }
+
+    /**
+     * Get the page for pagination
+     *
+     * @param Request $request
+     * @return int
+     */
+    public function getPage(Request $request): int
+    {
+        return (int) $request->get('page', 1);
+    }
+
+    /**
+     * Get the page size for pagination
+     *
+     * @param Request $request
+     * @return int
+     */
+    public function getPageSize(Request $request): int
+    {
+        $pageSize = $request->get('pageSize', 50);
+
+        if ($pageSize > 5000) {
+            return 5000;
+        }
+
+        return (int) $pageSize;
+    }
 }

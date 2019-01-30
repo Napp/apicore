@@ -55,15 +55,14 @@ class ApiPaginatedTransformerTest extends TestCase
         $paginatedInput = new Paginator($input, count($input));
 
         $transformedOutput = $this->transformer->transformOutput($paginatedInput);
-        $this->assertArrayHasKey('current_page', $transformedOutput);
+
+        $this->assertArrayHasKey('pagination', $transformedOutput);
         $this->assertArrayHasKey('data', $transformedOutput);
-        $this->assertArrayHasKey('first_page_url', $transformedOutput);
-        $this->assertArrayHasKey('from', $transformedOutput);
-        $this->assertArrayHasKey('next_page_url', $transformedOutput);
-        $this->assertArrayHasKey('path', $transformedOutput);
-        $this->assertArrayHasKey('per_page', $transformedOutput);
-        $this->assertArrayHasKey('prev_page_url', $transformedOutput);
-        $this->assertArrayHasKey('to', $transformedOutput);
+        $this->assertArrayHasKey('currentPage', $transformedOutput['pagination']);
+        $this->assertArrayHasKey('perPage', $transformedOutput['pagination']);
+        $this->assertArrayHasKey('firstPageUrl', $transformedOutput['pagination']);
+        $this->assertArrayHasKey('nextPageUrl', $transformedOutput['pagination']);
+        $this->assertArrayHasKey('prevPageUrl', $transformedOutput['pagination']);
 
         foreach ((array) $transformedOutput['data'] as $item) {
             $this->assertArrayHasKey('id', $item);
@@ -90,18 +89,16 @@ class ApiPaginatedTransformerTest extends TestCase
 
         $transformedOutput = $this->transformer->transformOutput($paginatedInput);
 
-        $this->assertArrayHasKey('current_page', $transformedOutput);
+        $this->assertArrayHasKey('pagination', $transformedOutput);
         $this->assertArrayHasKey('data', $transformedOutput);
-        $this->assertArrayHasKey('first_page_url', $transformedOutput);
-        $this->assertArrayHasKey('from', $transformedOutput);
-        $this->assertArrayHasKey('last_page', $transformedOutput);
-        $this->assertArrayHasKey('last_page_url', $transformedOutput);
-        $this->assertArrayHasKey('next_page_url', $transformedOutput);
-        $this->assertArrayHasKey('path', $transformedOutput);
-        $this->assertArrayHasKey('per_page', $transformedOutput);
-        $this->assertArrayHasKey('prev_page_url', $transformedOutput);
-        $this->assertArrayHasKey('to', $transformedOutput);
-        $this->assertArrayHasKey('total', $transformedOutput);
+        $this->assertArrayHasKey('currentPage', $transformedOutput['pagination']);
+        $this->assertArrayHasKey('totalPages', $transformedOutput['pagination']);
+        $this->assertArrayHasKey('total', $transformedOutput['pagination']);
+        $this->assertArrayHasKey('perPage', $transformedOutput['pagination']);
+        $this->assertArrayHasKey('firstPageUrl', $transformedOutput['pagination']);
+        $this->assertArrayHasKey('lastPageUrl', $transformedOutput['pagination']);
+        $this->assertArrayHasKey('nextPageUrl', $transformedOutput['pagination']);
+        $this->assertArrayHasKey('prevPageUrl', $transformedOutput['pagination']);
 
         foreach ((array) $transformedOutput['data'] as $item) {
             $this->assertArrayHasKey('id', $item);
@@ -110,7 +107,7 @@ class ApiPaginatedTransformerTest extends TestCase
             $this->assertArrayHasKey('age', $item);
         }
     }
-
+    /** @group me */
     public function test_transform_length_aware_paginated_with_relationships()
     {
         $category = Category::create(['title' => 'Electronics']);
@@ -128,18 +125,16 @@ class ApiPaginatedTransformerTest extends TestCase
 
         $transformedOutput = $category->getTransformer()->transformOutput($paginatedInput);
 
-        $this->assertArrayHasKey('current_page', $transformedOutput);
+        $this->assertArrayHasKey('pagination', $transformedOutput);
         $this->assertArrayHasKey('data', $transformedOutput);
-        $this->assertArrayHasKey('first_page_url', $transformedOutput);
-        $this->assertArrayHasKey('from', $transformedOutput);
-        $this->assertArrayHasKey('last_page', $transformedOutput);
-        $this->assertArrayHasKey('last_page_url', $transformedOutput);
-        $this->assertArrayHasKey('next_page_url', $transformedOutput);
-        $this->assertArrayHasKey('path', $transformedOutput);
-        $this->assertArrayHasKey('per_page', $transformedOutput);
-        $this->assertArrayHasKey('prev_page_url', $transformedOutput);
-        $this->assertArrayHasKey('to', $transformedOutput);
-        $this->assertArrayHasKey('total', $transformedOutput);
+        $this->assertArrayHasKey('currentPage', $transformedOutput['pagination']);
+        $this->assertArrayHasKey('totalPages', $transformedOutput['pagination']);
+        $this->assertArrayHasKey('total', $transformedOutput['pagination']);
+        $this->assertArrayHasKey('perPage', $transformedOutput['pagination']);
+        $this->assertArrayHasKey('firstPageUrl', $transformedOutput['pagination']);
+        $this->assertArrayHasKey('lastPageUrl', $transformedOutput['pagination']);
+        $this->assertArrayHasKey('nextPageUrl', $transformedOutput['pagination']);
+        $this->assertArrayHasKey('prevPageUrl', $transformedOutput['pagination']);
 
         $this->assertEquals('iPhone', $transformedOutput['data'][0]['products'][0]['title']);
         $this->assertEquals('Google Pixel', $transformedOutput['data'][0]['products'][1]['title']);
@@ -164,18 +159,16 @@ class ApiPaginatedTransformerTest extends TestCase
 
         $transformedOutput = (new CategoryStrictTransformer())->transformOutput($paginatedInput);
 
-        $this->assertArrayHasKey('current_page', $transformedOutput);
+        $this->assertArrayHasKey('pagination', $transformedOutput);
         $this->assertArrayHasKey('data', $transformedOutput);
-        $this->assertArrayHasKey('first_page_url', $transformedOutput);
-        $this->assertArrayHasKey('from', $transformedOutput);
-        $this->assertArrayHasKey('last_page', $transformedOutput);
-        $this->assertArrayHasKey('last_page_url', $transformedOutput);
-        $this->assertArrayHasKey('next_page_url', $transformedOutput);
-        $this->assertArrayHasKey('path', $transformedOutput);
-        $this->assertArrayHasKey('per_page', $transformedOutput);
-        $this->assertArrayHasKey('prev_page_url', $transformedOutput);
-        $this->assertArrayHasKey('to', $transformedOutput);
-        $this->assertArrayHasKey('total', $transformedOutput);
+        $this->assertArrayHasKey('currentPage', $transformedOutput['pagination']);
+        $this->assertArrayHasKey('totalPages', $transformedOutput['pagination']);
+        $this->assertArrayHasKey('total', $transformedOutput['pagination']);
+        $this->assertArrayHasKey('perPage', $transformedOutput['pagination']);
+        $this->assertArrayHasKey('firstPageUrl', $transformedOutput['pagination']);
+        $this->assertArrayHasKey('lastPageUrl', $transformedOutput['pagination']);
+        $this->assertArrayHasKey('nextPageUrl', $transformedOutput['pagination']);
+        $this->assertArrayHasKey('prevPageUrl', $transformedOutput['pagination']);
 
         $this->assertArrayNotHasKey('products', $transformedOutput['data'][0]);
         $this->assertArrayNotHasKey('products', $transformedOutput['data'][1]);
