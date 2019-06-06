@@ -37,6 +37,10 @@ class Renderer implements RendererInterface
     public function render(): JsonResponse
     {
         if (true === $this->exception instanceof NappException) {
+            if ($this->exception instanceof \JsonSerializable) {
+                return response()->json($this->exception->jsonSerialize(), $this->responseCode);
+            }
+
             return response()->json(
                 [
                 'error' => [

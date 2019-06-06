@@ -27,6 +27,7 @@ trait ValidateTrait
 
             $exception = new ValidationException;
             $exception->statusMessage = $exception->statusMessage . ': ' . $message;
+            $exception->validation = $validator->messages();
 
             throw $exception;
         }

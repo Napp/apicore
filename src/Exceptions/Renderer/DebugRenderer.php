@@ -35,6 +35,20 @@ class DebugRenderer implements RendererInterface
      */
     public function render(): JsonResponse
     {
+        if ($this->exception instanceof \JsonSerializable) {
+            return response()->json(array_merge_recursive(
+                $this->exception->jsonSerialize(),
+                [
+                    'error' => [
+                        'type' => \get_class($this->exception),
+                        'file' => $this->exception->getFile(),
+                        'line' => $this->exception->getLine(),
+                        'trace' => $this->formatTrace($this->exception->getTrace())
+                    ]
+                ]),
+                $this->responseCode);
+        }
+
         return response()->json(
             [
             'error' => [

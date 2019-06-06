@@ -108,6 +108,7 @@ abstract class ApiRequest extends FormRequest
         $message = $validator->messages()->first();
         $exception = new ValidationException();
         $exception->statusMessage = $exception->statusMessage . ': ' . $message;
+        $exception->validation = $this->transformValidationOutput($validator);
 
         throw $exception;
     }
@@ -120,11 +121,7 @@ abstract class ApiRequest extends FormRequest
     protected function handleApiInternalCallFailedValidation(Validator $validator): void
     {
         $input = $this->getTransformer()->transformOutput($this->except($this->dontFlash));
-        $errors = collect($this->getTransformer()->transformOutputKeys($validator->getMessageBag()->toArray()))
-            ->reject(function ($error) {
-                return false === \is_array($error);
-            })
-            ->toArray();
+        $errors = $this->transformValidationOutput($validator);
 
         throw new ApiInternalCallValidationException($input, $errors);
     }
@@ -137,5 +134,18 @@ abstract class ApiRequest extends FormRequest
     protected function isValueSet(array $input, string $key): bool
     {
         return (true === isset($input[$key]) && false === empty($input[$key]));
+    }
+
+    /**
+     * @param Validator $validator
+     * @return array
+     */
+    protected function transformValidationOutput($validator): array
+    {
+        return collect($this->getTransformer()->transformOutputKeys($validator->getMessageBag()->toArray()))
+            ->reject(function ($error) {
+                return false === \is_array($error);
+            })
+            ->toArray();
     }
 }
