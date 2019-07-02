@@ -5,8 +5,7 @@ namespace Napp\Core\Api\Exceptions\Exceptions;
 use JsonSerializable;
 
 /**
- * Class ValidationException
- * @package Napp\Core\Api\Exceptions\Exceptions
+ * Class ValidationException.
  */
 class ValidationException extends Exception implements JsonSerializable
 {
@@ -37,16 +36,16 @@ class ValidationException extends Exception implements JsonSerializable
     public $validation;
 
     /**
-     * Define the output format
+     * Define the output format.
      */
     public function jsonSerialize()
     {
         return [
             'error' => [
-                'code' => $this->statusCode,
-                'message' => $this->statusMessage,
-                'validation' => $this->validation
-            ]
+                'code'       => $this->statusCode,
+                'message'    => $this->statusMessage,
+                'validation' => $this->validation,
+            ],
         ];
     }
 }

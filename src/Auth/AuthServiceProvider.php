@@ -6,8 +6,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\ServiceProvider;
 
 /**
- * Class AuthServiceProvider
- * @package Napp\Core\Api\Auth
+ * Class AuthServiceProvider.
  */
 class AuthServiceProvider extends ServiceProvider
 {

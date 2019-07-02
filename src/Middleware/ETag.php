@@ -5,16 +5,16 @@ namespace Napp\Core\Api\Middleware;
 use Closure;
 
 /**
- * Class ETag
- * @package Napp\Core\Api\Middleware
+ * Class ETag.
  */
 class ETag
 {
     /**
      * Implement ETag support.
      *
-     * @param \Illuminate\Http\Request  $request
-     * @param \Closure  $next
+     * @param \Illuminate\Http\Request $request
+     * @param \Closure                 $next
+     *
      * @return mixed
      */
     public function handle($request, Closure $next)

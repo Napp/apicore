@@ -5,13 +5,12 @@ namespace Napp\Core\Api\Controllers;
 use Illuminate\Auth\AuthManager;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
+use Napp\Core\Api\Auth\NappHttpHeaders;
 use Napp\Core\Api\Exceptions\Exceptions\ApiInternalCallException;
 use Napp\Core\Api\Router\Router;
-use Napp\Core\Api\Auth\NappHttpHeaders;
 
 /**
- * Class ApiInternalController
- * @package Napp\Core\Api\Controllers
+ * Class ApiInternalController.
  */
 class ApiInternalController extends BaseController
 {
@@ -27,7 +26,7 @@ class ApiInternalController extends BaseController
 
     /**
      * @param AuthManager $auth
-     * @param Router $router
+     * @param Router      $router
      */
     public function __construct(AuthManager $auth, Router $router)
     {
@@ -45,7 +44,8 @@ class ApiInternalController extends BaseController
 
     /**
      * @param string $uri
-     * @param array $headers
+     * @param array  $headers
+     *
      * @return array
      */
     public function get(string $uri, array $headers = []): array
@@ -57,8 +57,9 @@ class ApiInternalController extends BaseController
 
     /**
      * @param string $uri
-     * @param array $data
-     * @param array $headers
+     * @param array  $data
+     * @param array  $headers
+     *
      * @return array
      */
     public function post(string $uri, array $data, array $headers = []): array
@@ -70,8 +71,9 @@ class ApiInternalController extends BaseController
 
     /**
      * @param string $uri
-     * @param array $data
-     * @param array $headers
+     * @param array  $data
+     * @param array  $headers
+     *
      * @return array
      */
     public function put(string $uri, array $data, array $headers = []): array
@@ -83,7 +85,8 @@ class ApiInternalController extends BaseController
 
     /**
      * @param string $uri
-     * @param array $headers
+     * @param array  $headers
+     *
      * @return array
      */
     public function delete(string $uri, array $headers = []): array
@@ -95,20 +98,23 @@ class ApiInternalController extends BaseController
 
     /**
      * @param array $headers
+     *
      * @return array
      */
     protected function getInternalCallHeaders(array $headers): array
     {
         return array_merge($headers, [
-            NappHttpHeaders::NAPP_API_CALL_TYPE => 'internal',
+            NappHttpHeaders::NAPP_API_CALL_TYPE       => 'internal',
             NappHttpHeaders::NAPP_AUTH_GLOBAL_USER_ID => $this->auth->guard()->id(),
         ]);
     }
 
     /**
      * @param Response|JsonResponse $response
-     * @return array
+     *
      * @throws ApiInternalCallException
+     *
+     * @return array
      */
     protected function formatResponse($response): array
     {

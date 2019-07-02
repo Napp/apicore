@@ -3,8 +3,7 @@
 namespace Napp\Core\Api\Exceptions\Exceptions;
 
 /**
- * Class LoginUnauthorized
- * @package Napp\Core\Api\Exceptions\Exceptions
+ * Class LoginUnauthorized.
  */
 class LoginUnauthorized extends Exception
 {

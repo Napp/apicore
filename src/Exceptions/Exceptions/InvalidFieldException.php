@@ -3,8 +3,7 @@
 namespace Napp\Core\Api\Exceptions\Exceptions;
 
 /**
- * Class InvalidFieldException
- * @package Napp\Core\Api\Exceptions\Exceptions
+ * Class InvalidFieldException.
  */
 class InvalidFieldException extends Exception
 {

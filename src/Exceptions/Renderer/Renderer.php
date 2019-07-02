@@ -6,8 +6,7 @@ use Illuminate\Http\JsonResponse;
 use Napp\Core\Api\Exceptions\Exceptions\Exception as NappException;
 
 /**
- * Class Renderer
- * @package Napp\Core\Api\Exceptions\Renderer
+ * Class Renderer.
  */
 class Renderer implements RendererInterface
 {
@@ -44,9 +43,9 @@ class Renderer implements RendererInterface
             return response()->json(
                 [
                 'error' => [
-                    'code' => $this->statusCode,
+                    'code'    => $this->statusCode,
                     'message' => $this->statusMessage,
-                ]],
+                ], ],
                 $this->responseCode
             );
         }
@@ -56,54 +55,54 @@ class Renderer implements RendererInterface
                 return response()->json(
                     [
                     'error' => [
-                        'code' => $this->statusCode,
-                        'message' => 'Unprocessable Entity'
-                    ]],
+                        'code'    => $this->statusCode,
+                        'message' => 'Unprocessable Entity',
+                    ], ],
                     $this->responseCode
                 );
             case 401:
                 return response()->json(
                     [
                         'error' => [
-                            'code' => $this->statusCode,
-                            'message' => 'Authentication credentials were missing or incorrect'
-                        ]],
+                            'code'    => $this->statusCode,
+                            'message' => 'Authentication credentials were missing or incorrect',
+                        ], ],
                     $this->responseCode
                 );
             case 403:
                 return response()->json(
                     [
                         'error' => [
-                            'code' => $this->statusCode,
-                            'message' => 'Forbidden'
-                        ]],
+                            'code'    => $this->statusCode,
+                            'message' => 'Forbidden',
+                        ], ],
                     $this->responseCode
                 );
             case 404:
                 return response()->json(
                     [
                     'error' => [
-                        'code' => $this->statusCode,
-                        'message' => 'Not Found'
-                    ]],
+                        'code'    => $this->statusCode,
+                        'message' => 'Not Found',
+                    ], ],
                     $this->responseCode
                 );
             case 405:
                 return response()->json(
                     [
                     'error' => [
-                        'code' => $this->statusCode,
-                        'message' => 'Method Not Allowed'
-                    ]],
+                        'code'    => $this->statusCode,
+                        'message' => 'Method Not Allowed',
+                    ], ],
                     $this->responseCode
                 );
             default:
                 return response()->json(
                     [
                     'error' => [
-                        'code' => $this->statusCode,
-                        'message' => 'Internal Server Error'
-                    ]],
+                        'code'    => $this->statusCode,
+                        'message' => 'Internal Server Error',
+                    ], ],
                     500
                 );
         }
@@ -111,6 +110,7 @@ class Renderer implements RendererInterface
 
     /**
      * @param \Exception $e
+     *
      * @return void
      */
     public function setException(\Exception $e)
@@ -120,6 +120,7 @@ class Renderer implements RendererInterface
 
     /**
      * @param int $responseCode
+     *
      * @return void
      */
     public function setResponseCode($responseCode)
@@ -129,6 +130,7 @@ class Renderer implements RendererInterface
 
     /**
      * @param int $statusCode
+     *
      * @return void
      */
     public function setStatusCode($statusCode)
@@ -138,6 +140,7 @@ class Renderer implements RendererInterface
 
     /**
      * @param string $statusMessage
+     *
      * @return void
      */
     public function setStatusMessage($statusMessage)

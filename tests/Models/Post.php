@@ -6,9 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Post extends Model
 {
-
     protected $guarded = [
-        'uuid'
+        'uuid',
     ];
 
     /**
@@ -22,7 +21,7 @@ class Post extends Model
      * @var array
      */
     public $casts = [
-        'tags' => 'json'
+        'tags' => 'json',
     ];
 
     /**
@@ -44,6 +43,4 @@ class Post extends Model
         'owner'      => ['newName' => 'owner_id',   'dataType' => 'nullable[int'],
         'created_at' => ['newName' => 'postedAt',   'dataType' => 'datetime'],
     ];
-
-
 }

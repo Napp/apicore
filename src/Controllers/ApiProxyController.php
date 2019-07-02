@@ -6,14 +6,14 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 /**
- * Class ApiProxyController
- * @package Napp\Core\Api\Controllers
+ * Class ApiProxyController.
  */
 class ApiProxyController extends ApiInternalController
 {
     /**
-     * @param string $endpoint
+     * @param string  $endpoint
      * @param Request $request
+     *
      * @return JsonResponse
      */
     public function __invoke(string $endpoint, Request $request): JsonResponse
@@ -24,8 +24,9 @@ class ApiProxyController extends ApiInternalController
     }
 
     /**
-     * @param string $endpoint
+     * @param string  $endpoint
      * @param Request $request
+     *
      * @return mixed
      */
     private function callApi(string $endpoint, Request $request)
@@ -44,7 +45,7 @@ class ApiProxyController extends ApiInternalController
         }
 
         if (false === empty($arguments)) {
-            $callArguments = [$url . '?' . http_build_query($arguments)];
+            $callArguments = [$url.'?'.http_build_query($arguments)];
         }
 
         return $this->{$requestMethod}(...$callArguments);

@@ -1,10 +1,9 @@
-<?php 
+<?php
 
 namespace Napp\Core\Api\Exceptions\Exceptions;
 
 /**
- * Class AuthenticationIncorrectException
- * @package Napp\Core\Api\Exceptions\Exceptions
+ * Class AuthenticationIncorrectException.
  */
 class AuthenticationIncorrectException extends Exception
 {
