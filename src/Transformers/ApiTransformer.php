@@ -4,6 +4,7 @@ namespace Napp\Core\Api\Transformers;
 
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Pagination\AbstractPaginator;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Collection;
@@ -69,7 +70,7 @@ class ApiTransformer implements TransformerInterface
     {
         $output = [];
 
-        if (true === $data instanceof LengthAwarePaginator || true === $data instanceof Paginator) {
+        if (true === ($data instanceof AbstractPaginator)) {
             return $this->transformPaginatedOutput($data);
         }
 

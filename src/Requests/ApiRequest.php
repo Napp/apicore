@@ -4,6 +4,7 @@ namespace Napp\Core\Api\Requests;
 
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Str;
 use Napp\Core\Api\Exceptions\Exceptions\ApiInternalCallValidationException;
 use Napp\Core\Api\Exceptions\Exceptions\InvalidFieldException;
 use Napp\Core\Api\Exceptions\Exceptions\ValidationException;
@@ -72,7 +73,7 @@ abstract class ApiRequest extends FormRequest
          * Remove input fields like _method, _token, etc.
          */
         $input = array_filter($this->input(), function ($key) {
-            return !starts_with($key, '_');
+            return ! Str::startsWith($key, '_');
         }, ARRAY_FILTER_USE_KEY);
 
         return $this->getTransformer()->transformInput($input);
