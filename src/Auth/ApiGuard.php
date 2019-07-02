@@ -13,13 +13,14 @@ class ApiGuard extends TokenGuard
 {
     /**
      * @param UserProvider $provider
-     * @param Request      $request
+     * @param Request $request
+     * @param $storageKey
      */
-    public function __construct(UserProvider $provider, Request $request)
+    public function __construct(UserProvider $provider, Request $request, $storageKey)
     {
         parent::__construct($provider, $request);
 
-        $this->storageKey = 'api_key';
+        $this->storageKey = $storageKey;
     }
 
     /**
