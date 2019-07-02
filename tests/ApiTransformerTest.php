@@ -19,7 +19,7 @@ class ApiTransformerTest extends TestCase
      */
     protected $transformer;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
