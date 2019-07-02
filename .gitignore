@@ -7,3 +7,4 @@ _ide_helper.php
 coverage
 coverage.xml
 composer.lock
+\.phpunit\.result\.cache
