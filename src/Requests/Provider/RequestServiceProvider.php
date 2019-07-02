@@ -19,8 +19,4 @@ class RequestServiceProvider extends ServiceProvider
             });
         }
     }
-
-    public function register()
-    {
-    }
 }
