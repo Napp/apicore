@@ -3,8 +3,7 @@
 namespace Napp\Core\Api\Exceptions\Exceptions;
 
 /**
- * Class ApiInternalCallValidationException
- * @package Napp\Core\Api\Exceptions\Exceptions
+ * Class ApiInternalCallValidationException.
  */
 class ApiInternalCallValidationException extends \Exception
 {

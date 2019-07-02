@@ -6,8 +6,7 @@ use Illuminate\Support\ServiceProvider as BaseProvider;
 use Napp\Core\Api\Router\Router;
 
 /**
- * Class RouterServiceProvider
- * @package Napp\Core\Api\Router\Provider
+ * Class RouterServiceProvider.
  */
 class RouterServiceProvider extends BaseProvider
 {

@@ -5,8 +5,7 @@ namespace Napp\Core\Api\Exceptions\Exceptions;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * Class ApiInternalCallException
- * @package Napp\Core\Api\Exceptions\Exceptions
+ * Class ApiInternalCallException.
  */
 class ApiInternalCallException extends \RuntimeException
 {
@@ -27,7 +26,7 @@ class ApiInternalCallException extends \RuntimeException
 
     /**
      * @param Response $response
-     * @param string $message
+     * @param string   $message
      */
     public function __construct(Response $response, $message = 'There was an error while processing your request')
     {
@@ -61,4 +60,3 @@ class ApiInternalCallException extends \RuntimeException
         return $this->previousException;
     }
 }
-

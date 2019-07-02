@@ -3,8 +3,7 @@
 namespace Napp\Core\Api\Exceptions\Exceptions;
 
 /**
- * Class ActionNotAllowedException
- * @package Napp\Core\Api\Exceptions\Exceptions
+ * Class ActionNotAllowedException.
  */
 class ActionNotAllowedException extends Exception
 {

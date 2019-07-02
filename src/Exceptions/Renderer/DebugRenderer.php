@@ -5,8 +5,7 @@ namespace Napp\Core\Api\Exceptions\Renderer;
 use Illuminate\Http\JsonResponse;
 
 /**
- * Class DebugRenderer
- * @package Napp\Core\Api\Exceptions\Renderer
+ * Class DebugRenderer.
  */
 class DebugRenderer implements RendererInterface
 {
@@ -40,11 +39,11 @@ class DebugRenderer implements RendererInterface
                 $this->exception->jsonSerialize(),
                 [
                     'error' => [
-                        'type' => \get_class($this->exception),
-                        'file' => $this->exception->getFile(),
-                        'line' => $this->exception->getLine(),
-                        'trace' => $this->formatTrace($this->exception->getTrace())
-                    ]
+                        'type'  => \get_class($this->exception),
+                        'file'  => $this->exception->getFile(),
+                        'line'  => $this->exception->getLine(),
+                        'trace' => $this->formatTrace($this->exception->getTrace()),
+                    ],
                 ]),
                 $this->responseCode);
         }
@@ -52,19 +51,20 @@ class DebugRenderer implements RendererInterface
         return response()->json(
             [
             'error' => [
-                'code' => $this->statusCode,
+                'code'    => $this->statusCode,
                 'message' => $this->statusMessage,
-                'type' => \get_class($this->exception),
-                'file' => $this->exception->getFile(),
-                'line' => $this->exception->getLine(),
-                'trace' => $this->formatTrace($this->exception->getTrace())
-            ]],
+                'type'    => \get_class($this->exception),
+                'file'    => $this->exception->getFile(),
+                'line'    => $this->exception->getLine(),
+                'trace'   => $this->formatTrace($this->exception->getTrace()),
+            ], ],
             $this->responseCode
         );
     }
 
     /**
      * @param \Exception $e
+     *
      * @return void
      */
     public function setException(\Exception $e)
@@ -74,6 +74,7 @@ class DebugRenderer implements RendererInterface
 
     /**
      * @param int $responseCode
+     *
      * @return void
      */
     public function setResponseCode($responseCode)
@@ -83,6 +84,7 @@ class DebugRenderer implements RendererInterface
 
     /**
      * @param int $statusCode
+     *
      * @return void
      */
     public function setStatusCode($statusCode)
@@ -92,6 +94,7 @@ class DebugRenderer implements RendererInterface
 
     /**
      * @param string $statusMessage
+     *
      * @return void
      */
     public function setStatusMessage($statusMessage)
@@ -103,6 +106,7 @@ class DebugRenderer implements RendererInterface
      * Remove the args property from the trace array objects.
      *
      * @param array $trace
+     *
      * @return array
      */
     protected function formatTrace(array $trace)

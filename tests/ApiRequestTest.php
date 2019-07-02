@@ -33,6 +33,7 @@ class ApiRequestTest extends TestCase
         // Laravel 5.6 changed the method validate method on the FormRequest to validateResolved.
         if (true === version_compare($this->app->version(), '5.6', '>=')) {
             $this->request->validateResolved();
+
             return;
         }
 
@@ -55,9 +56,10 @@ class ApiRequestTest extends TestCase
 
         try {
             $this->request->validateResolved();
-        } catch(ValidationException $exception) {
+        } catch (ValidationException $exception) {
             $this->assertArrayHasKey('number', $exception->validation);
             $this->assertEquals('The number must be an integer.', $exception->validation['number'][0]);
+
             return;
         }
 
@@ -70,10 +72,11 @@ class ApiRequestTest extends TestCase
 
         try {
             $this->request->validateResolved();
-        } catch(ValidationException $exception) {
+        } catch (ValidationException $exception) {
             $this->assertCount(2, $exception->validation);
             $this->assertArrayHasKey('email', $exception->validation);
             $this->assertEquals('The email field is required.', $exception->validation['email'][0]);
+
             return;
         }
 
@@ -90,6 +93,7 @@ class ApiRequestTest extends TestCase
         // Laravel 5.6 changed the method validate method on the FormRequest to validateResolved.
         if (true === version_compare($this->app->version(), '5.6', '>=')) {
             $this->request->validateResolved();
+
             return;
         }
 
@@ -99,7 +103,7 @@ class ApiRequestTest extends TestCase
     /**
      * Get package providers.
      *
-     * @param  \Illuminate\Foundation\Application  $app
+     * @param \Illuminate\Foundation\Application $app
      *
      * @return array
      */

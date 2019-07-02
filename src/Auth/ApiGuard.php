@@ -7,14 +7,13 @@ use Illuminate\Contracts\Auth\UserProvider;
 use Illuminate\Http\Request;
 
 /**
- * Class ApiGuard
- * @package Napp\Core\Api\Auth
+ * Class ApiGuard.
  */
 class ApiGuard extends TokenGuard
 {
     /**
      * @param UserProvider $provider
-     * @param Request $request
+     * @param Request      $request
      */
     public function __construct(UserProvider $provider, Request $request)
     {
@@ -25,6 +24,7 @@ class ApiGuard extends TokenGuard
 
     /**
      * @param array $credentials
+     *
      * @return bool
      */
     public function attempt(array $credentials = []): bool

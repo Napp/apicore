@@ -3,8 +3,7 @@
 namespace Napp\Core\Api\Transformers;
 
 /**
- * Trait TransformerAware
- * @package Napp\Core\Api\Transformers
+ * Trait TransformerAware.
  */
 trait TransformerAware
 {

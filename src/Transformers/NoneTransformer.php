@@ -6,13 +6,13 @@ use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Support\Arr;
 
 /**
- * Class NoneTransformer
- * @package Napp\Core\Api\Transformers
+ * Class NoneTransformer.
  */
 class NoneTransformer implements TransformerInterface
 {
     /**
      * @param array|Arrayable $data
+     *
      * @return array
      */
     public function transformInput($data): array
@@ -26,6 +26,7 @@ class NoneTransformer implements TransformerInterface
 
     /**
      * @param array|Arrayable $data
+     *
      * @return array
      */
     public function transformOutput($data): array
@@ -39,6 +40,7 @@ class NoneTransformer implements TransformerInterface
 
     /**
      * @param array $data
+     *
      * @return array
      */
     public function transformOutputKeys(array $data): array

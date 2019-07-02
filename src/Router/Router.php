@@ -7,8 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Router as LaravelRouter;
 
 /**
- * Class Router
- * @package Napp\Core\Api\Router
+ * Class Router.
  */
 class Router
 {
@@ -22,8 +21,8 @@ class Router
 
     /**
      * @param \Illuminate\Foundation\Application $app
-     * @param \Illuminate\Http\Request $request,
-     * @param \Illuminate\Routing\Router $router
+     * @param \Illuminate\Http\Request           $request,
+     * @param \Illuminate\Routing\Router         $router
      */
     public function __construct(Application $app, Request $request, LaravelRouter $router)
     {
@@ -33,10 +32,11 @@ class Router
     }
 
     /**
-     * @param  string $uri
-     * @param  array  $data
-     * @param  array  $headers
-     * @param  string $content
+     * @param string $uri
+     * @param array  $data
+     * @param array  $headers
+     * @param string $content
+     *
      * @return \Illuminate\Http\Response
      */
     public function get()
@@ -45,10 +45,11 @@ class Router
     }
 
     /**
-     * @param  string $uri
-     * @param  array  $data
-     * @param  array  $headers
-     * @param  string $content
+     * @param string $uri
+     * @param array  $data
+     * @param array  $headers
+     * @param string $content
+     *
      * @return \Illuminate\Http\Response
      */
     public function post()
@@ -57,10 +58,11 @@ class Router
     }
 
     /**
-     * @param  string $uri
-     * @param  array  $data
-     * @param  array  $headers
-     * @param  string $content
+     * @param string $uri
+     * @param array  $data
+     * @param array  $headers
+     * @param string $content
+     *
      * @return \Illuminate\Http\Response
      */
     public function put()
@@ -69,10 +71,11 @@ class Router
     }
 
     /**
-     * @param  string $uri
-     * @param  array  $data
-     * @param  array  $headers
-     * @param  string $content
+     * @param string $uri
+     * @param array  $data
+     * @param array  $headers
+     * @param string $content
+     *
      * @return \Illuminate\Http\Response
      */
     public function delete()
@@ -81,7 +84,8 @@ class Router
     }
 
     /**
-     * @param  array $requests An array of requests
+     * @param array $requests An array of requests
+     *
      * @return array
      */
     public function batchRequest(array $requests)
@@ -94,24 +98,28 @@ class Router
     }
 
     /**
-     * @param  string $method
-     * @param  array  $args
+     * @param string $method
+     * @param array  $args
+     *
      * @return \Illuminate\Http\Response
      */
     public function quickCall($method, array $args)
     {
         array_unshift($args, $method);
-        return call_user_func_array([$this, "singleRequest"], $args);
+
+        return call_user_func_array([$this, 'singleRequest'], $args);
     }
 
     /**
-     * @param  string $method
-     * @param  string $uri
-     * @param  array $data
-     * @param  array $headers
-     * @param  string $content
-     * @return \Illuminate\Http\Response
+     * @param string $method
+     * @param string $uri
+     * @param array  $data
+     * @param array  $headers
+     * @param string $content
+     *
      * @throws \Exception
+     *
+     * @return \Illuminate\Http\Response
      */
     public function singleRequest($method, $uri, array $data = [], array $headers = [], $content = null)
     {
@@ -141,11 +149,13 @@ class Router
     /**
      * @param array $default
      * @param array $headers
+     *
      * @return array
      */
     private function overrideHeaders(array $default, array $headers)
     {
         $headers = $this->transformHeadersToUppercaseUnderscoreType($headers);
+
         return array_merge($default, $headers);
     }
 
@@ -160,13 +170,15 @@ class Router
     }
 
     /**
-     * @param  string $method
-     * @param  string $uri
-     * @param  array $data
-     * @param  array $headers
-     * @param  string $content
-     * @return \Illuminate\Http\Response
+     * @param string $method
+     * @param string $uri
+     * @param array  $data
+     * @param array  $headers
+     * @param string $content
+     *
      * @throws \Exception
+     *
+     * @return \Illuminate\Http\Response
      */
     private function request($method, $uri, array $data = [], array $headers = [], $content = null)
     {
@@ -180,11 +192,12 @@ class Router
     }
 
     /**
-     * @param  string $method
-     * @param  string $uri
-     * @param  array  $data
-     * @param  array  $headers
-     * @param  string $content
+     * @param string $method
+     * @param string $uri
+     * @param array  $data
+     * @param array  $headers
+     * @param string $content
+     *
      * @return \Illuminate\Http\Request
      */
     private function createRequest($method, $uri, array $data = [], array $headers = [], $content = null)
@@ -196,6 +209,7 @@ class Router
 
     /**
      * @param $headers
+     *
      * @return array
      */
     private function transformHeadersToUppercaseUnderscoreType($headers)
@@ -212,9 +226,10 @@ class Router
     }
 
     /**
-     * https://github.com/symfony/symfony/issues/5074
+     * https://github.com/symfony/symfony/issues/5074.
      *
-     * @param  array $headers
+     * @param array $headers
+     *
      * @return array
      */
     private function transformHeadersToServerVariables($headers)
@@ -222,7 +237,7 @@ class Router
         $server = [];
 
         foreach ($headers as $headerType => $headerValue) {
-            $headerType = 'HTTP_' . $headerType;
+            $headerType = 'HTTP_'.$headerType;
 
             $server[$headerType] = $headerValue;
         }

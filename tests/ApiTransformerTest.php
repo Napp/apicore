@@ -5,12 +5,12 @@ namespace Napp\Core\Api\Tests\Unit;
 use Napp\Core\Api\Tests\Models\Category;
 use Napp\Core\Api\Tests\Models\Post;
 use Napp\Core\Api\Tests\Models\Product;
+use Napp\Core\Api\Tests\TestCase;
 use Napp\Core\Api\Tests\Transformers\CategoryStrictTransformer;
 use Napp\Core\Api\Tests\Transformers\CategoryTransformerWithDifferentOutputKey;
 use Napp\Core\Api\Tests\Transformers\PostTransformer;
 use Napp\Core\Api\Tests\Transformers\ProductTransformer;
 use Napp\Core\Api\Transformers\ApiTransformer;
-use Napp\Core\Api\Tests\TestCase;
 
 class ApiTransformerTest extends TestCase
 {
@@ -24,11 +24,11 @@ class ApiTransformerTest extends TestCase
         parent::setUp();
 
         $apiMapping = [
-            'id' => ['newName' => 'id', 'dataType' => 'int'],
-            'name' => ['newName' => 'companyName', 'dataType' => 'string'],
+            'id'         => ['newName' => 'id', 'dataType' => 'int'],
+            'name'       => ['newName' => 'companyName', 'dataType' => 'string'],
             'has_access' => ['newName' => 'hasAccess', 'dataType' => 'bool'],
             'categories' => ['newName' => 'cats', 'dataType' => 'array'],
-            'price' => ['newName' => 'price', 'dataType' => 'float']
+            'price'      => ['newName' => 'price', 'dataType' => 'float'],
         ];
 
         $this->transformer = new ApiTransformer();
@@ -38,21 +38,21 @@ class ApiTransformerTest extends TestCase
     public function test_input_transforming()
     {
         $input = [
-            'id' => 1,
-            'companyName' => 'Wayne Industries',
-            'hasAccess' => 0,
+            'id'                  => 1,
+            'companyName'         => 'Wayne Industries',
+            'hasAccess'           => 0,
             'someAdditionalField' => 'someAdditionalValue',
-            'cats' => ['foo' => 'bar'],
-            'price' => '1000'
+            'cats'                => ['foo' => 'bar'],
+            'price'               => '1000',
         ];
 
         $expected = [
-            'id' => 1,
-            'name' => 'Wayne Industries',
-            'has_access' => 0,
+            'id'                  => 1,
+            'name'                => 'Wayne Industries',
+            'has_access'          => 0,
             'someAdditionalField' => 'someAdditionalValue',
-            'categories' => ['foo' => 'bar'],
-            'price' => (float) 1000,
+            'categories'          => ['foo' => 'bar'],
+            'price'               => (float) 1000,
         ];
         $transformedInput = $this->transformer->transformInput($input);
 
@@ -66,16 +66,16 @@ class ApiTransformerTest extends TestCase
         $reflection->setValue($this->transformer, true);
 
         $output = [
-            'id' => 1,
-            'name' => 'Wayne Industries',
-            'has_access' => 0,
-            'some_additional_field' => 'some_additional_value'
+            'id'                    => 1,
+            'name'                  => 'Wayne Industries',
+            'has_access'            => 0,
+            'some_additional_field' => 'some_additional_value',
         ];
 
         $expectedOutput = [
-            'id' => 1,
+            'id'          => 1,
             'companyName' => 'Wayne Industries',
-            'hasAccess' => false,
+            'hasAccess'   => false,
         ];
 
         $transformedOutput = $this->transformer->transformOutput($output);
@@ -86,19 +86,19 @@ class ApiTransformerTest extends TestCase
     public function test_output_transforming()
     {
         $output = [
-            'id' => 1,
-            'name' => 'Wayne Industries',
-            'has_access' => 0,
+            'id'                    => 1,
+            'name'                  => 'Wayne Industries',
+            'has_access'            => 0,
             'some_additional_field' => 'some_additional_value',
-            'price' => '1000'
+            'price'                 => '1000',
         ];
 
         $expectedOutput = [
-            'id' => 1,
-            'companyName' => 'Wayne Industries',
-            'hasAccess' => false,
+            'id'                    => 1,
+            'companyName'           => 'Wayne Industries',
+            'hasAccess'             => false,
             'some_additional_field' => 'some_additional_value',
-            'price' => (float) 1000
+            'price'                 => (float) 1000,
         ];
 
         $transformedOutput = $this->transformer->transformOutput($output);
@@ -110,32 +110,32 @@ class ApiTransformerTest extends TestCase
     {
         $output = collect();
         $output->push([
-            'id' => 1,
-            'name' => 'Wayne Industries',
-            'has_access' => 0,
-            'some_additional_field' => 'some_additional_value'
+            'id'                    => 1,
+            'name'                  => 'Wayne Industries',
+            'has_access'            => 0,
+            'some_additional_field' => 'some_additional_value',
         ]);
 
         $output->push([
-            'id' => 2,
-            'name' => 'LexCorp',
-            'has_access' => 1,
-            'some_additional_field' => 'some_additional_value'
+            'id'                    => 2,
+            'name'                  => 'LexCorp',
+            'has_access'            => 1,
+            'some_additional_field' => 'some_additional_value',
         ]);
 
         $expectedOutput = [
             [
-                'id' => 1,
-                'companyName' => 'Wayne Industries',
-                'hasAccess' => false,
-                'some_additional_field' => 'some_additional_value'
+                'id'                    => 1,
+                'companyName'           => 'Wayne Industries',
+                'hasAccess'             => false,
+                'some_additional_field' => 'some_additional_value',
             ],
             [
-                'id' => 2,
-                'companyName' => 'LexCorp',
-                'hasAccess' => true,
-                'some_additional_field' => 'some_additional_value'
-            ]
+                'id'                    => 2,
+                'companyName'           => 'LexCorp',
+                'hasAccess'             => true,
+                'some_additional_field' => 'some_additional_value',
+            ],
         ];
 
         $transformedOutput = $this->transformer->transformOutput($output);
@@ -151,30 +151,30 @@ class ApiTransformerTest extends TestCase
 
         $output = collect();
         $output->push([
-            'id' => 1,
-            'name' => 'Wayne Industries',
-            'has_access' => 0,
-            'some_additional_field' => 'some_additional_value'
+            'id'                    => 1,
+            'name'                  => 'Wayne Industries',
+            'has_access'            => 0,
+            'some_additional_field' => 'some_additional_value',
         ]);
 
         $output->push([
-            'id' => 2,
-            'name' => 'LexCorp',
-            'has_access' => 1,
-            'some_additional_field' => 'some_additional_value'
+            'id'                    => 2,
+            'name'                  => 'LexCorp',
+            'has_access'            => 1,
+            'some_additional_field' => 'some_additional_value',
         ]);
 
         $expectedOutput = [
             [
-                'id' => 1,
+                'id'          => 1,
                 'companyName' => 'Wayne Industries',
-                'hasAccess' => false,
+                'hasAccess'   => false,
             ],
             [
-                'id' => 2,
+                'id'          => 2,
                 'companyName' => 'LexCorp',
-                'hasAccess' => true,
-            ]
+                'hasAccess'   => true,
+            ],
         ];
 
         $transformedOutput = $this->transformer->transformOutput($output);
@@ -185,39 +185,39 @@ class ApiTransformerTest extends TestCase
     public function test_the_datatype_is_nullable()
     {
         $this->transformer->setApiMapping([
-            'price' => ['newName' => 'price_new', 'dataType' => 'nullable|int']
+            'price' => ['newName' => 'price_new', 'dataType' => 'nullable|int'],
         ]);
 
         $input = [
-            'price' => '100'
+            'price' => '100',
         ];
 
         $expectedOutput = [
-            'price_new' => 100
+            'price_new' => 100,
         ];
 
         $this->assertSame($expectedOutput, $this->transformer->transformOutput($input));
 
         $input = [
-            'price' => 0
+            'price' => 0,
         ];
 
         $expectedOutput = [
-            'price_new' => 0
+            'price_new' => 0,
         ];
 
         $this->assertSame($expectedOutput, $this->transformer->transformOutput($input));
 
         $this->transformer->setApiMapping([
-            'description' => ['newName' => 'description', 'dataType' => 'array|nullable']
+            'description' => ['newName' => 'description', 'dataType' => 'array|nullable'],
         ]);
 
         $input = [
-            'description' => []
+            'description' => [],
         ];
 
         $expectedOutput = [
-            'description' => null
+            'description' => null,
         ];
 
         $this->assertSame($expectedOutput, $this->transformer->transformOutput($input));
@@ -226,15 +226,15 @@ class ApiTransformerTest extends TestCase
     public function test_arguments_can_be_passed_to_the_datatype()
     {
         $this->transformer->setApiMapping([
-            'price' => ['newName' => 'price', 'dataType' => 'float:2']
+            'price' => ['newName' => 'price', 'dataType' => 'float:2'],
         ]);
 
         $input = [
-            'price' => '100.5542'
+            'price' => '100.5542',
         ];
 
         $expectedOutput = [
-            'price' => 100.55
+            'price' => 100.55,
         ];
 
         $this->assertSame($expectedOutput, $this->transformer->transformOutput($input));
@@ -299,16 +299,16 @@ class ApiTransformerTest extends TestCase
 
         $this->assertEquals('iPhone 8', $result['products'][0]['variants'][0]['title']);
     }
-    
+
     public function test_transform_not_strict_model()
     {
         $post = Post::create([
-            'title' => 'My First post',
-            'desc' => 'body text',
-            'tags' => [2, '222', 'wow'],
+            'title'      => 'My First post',
+            'desc'       => 'body text',
+            'tags'       => [2, '222', 'wow'],
             'other_tags' => null,
-            'owner' => 34,
-            'uuid' => '66220588-c944-3425-a3ea-0fc80f8c32fe'
+            'owner'      => 34,
+            'uuid'       => '66220588-c944-3425-a3ea-0fc80f8c32fe',
         ]);
         $result = app(PostTransformer::class)->transformOutput($post);
 
@@ -324,7 +324,7 @@ class ApiTransformerTest extends TestCase
         $category->products()->create(['name' => 'iPhone', 'price'=> 100.0]);
         $category->load('products');
 
-        $result = (new CategoryStrictTransformer)->transformOutput($category);
+        $result = (new CategoryStrictTransformer())->transformOutput($category);
 
         $this->assertArrayNotHasKey('products', $result);
     }
@@ -336,7 +336,7 @@ class ApiTransformerTest extends TestCase
         $category->products()->create(['name' => 'iPhone', 'price'=> 100.0]);
         $category->load('products');
 
-        $result = (new CategoryTransformerWithDifferentOutputKey)->transformOutput($category);
+        $result = (new CategoryTransformerWithDifferentOutputKey())->transformOutput($category);
 
         $this->assertArrayNotHasKey('products', $result);
         $this->assertArrayHasKey('indexes', $result);
