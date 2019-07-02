@@ -16,7 +16,14 @@ class AuthServiceProvider extends ServiceProvider
     public function register()
     {
         Auth::extend('api', function ($app, $name, array $config) {
-            return new ApiGuard(Auth::createUserProvider($config['provider']), $app['request']);
+            return new ApiGuard(Auth::createUserProvider($config['provider']), $app['request'], $app['config']->get('api-core.api-key'));
         });
+    }
+
+    public function boot()
+    {
+        $this->publishes([
+            __DIR__. '/config/api-core.php' => config_path('api-core.php'),
+        ]);
     }
 }
