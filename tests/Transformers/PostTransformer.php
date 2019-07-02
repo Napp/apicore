@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace Napp\Core\Api\Tests\Transformers;
 
@@ -6,12 +6,10 @@ use Napp\Core\Api\Tests\Models\Post;
 use Napp\Core\Api\Transformers\ApiTransformer;
 
 /**
- * Class PostTransformer
- * @package Napp\Core\Api\Tests\Transformers
+ * Class PostTransformer.
  */
 class PostTransformer extends ApiTransformer
 {
-
     /**
      * @param Post $post
      */

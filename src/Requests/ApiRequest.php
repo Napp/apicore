@@ -11,14 +11,14 @@ use Napp\Core\Api\Transformers\ApiTransformer;
 use Napp\Core\Api\Transformers\TransformerInterface;
 
 /**
- * Class ApiRequest
- * @package Napp\Core\Api\Requests
+ * Class ApiRequest.
  */
 abstract class ApiRequest extends FormRequest
 {
     /**
-     * @return Validator
      * @throws \Napp\Core\Api\Exceptions\Exceptions\InvalidFieldException
+     *
+     * @return Validator
      */
     protected function getValidatorInstance()
     {
@@ -30,10 +30,12 @@ abstract class ApiRequest extends FormRequest
 
     /**
      * @param Validator $validator
-     * @return void
+     *
      * @throws \Illuminate\Validation\ValidationException
      * @throws \Napp\Core\Api\Exceptions\Exceptions\ApiInternalCallValidationException
      * @throws \Napp\Core\Api\Exceptions\Exceptions\ValidationException
+     *
+     * @return void
      */
     protected function failedValidation(Validator $validator)
     {
@@ -45,16 +47,17 @@ abstract class ApiRequest extends FormRequest
     }
 
     /**
-     * @return void
      * @throws InvalidFieldException
+     *
+     * @return void
      */
     protected function validateInputFields(): void
     {
         $input = $this->input();
         $rules = $this->rules();
         if (false === empty(array_diff_key($input, $rules))) {
-            $exception = new InvalidFieldException;
-            $exception->statusMessage = $exception->statusMessage . ': ' . implode(',', array_keys(array_diff_key($input, $rules)));
+            $exception = new InvalidFieldException();
+            $exception->statusMessage = $exception->statusMessage.': '.implode(',', array_keys(array_diff_key($input, $rules)));
 
             throw $exception;
         }
@@ -85,6 +88,7 @@ abstract class ApiRequest extends FormRequest
 
     /**
      * @see AppServiceProvider
+     *
      * @return bool
      */
     protected function isApiInternalCall(): bool
@@ -99,15 +103,17 @@ abstract class ApiRequest extends FormRequest
 
     /**
      * @param Validator $validator
-     * @return void
+     *
      * @throws ValidationException
      * @throws \Illuminate\Validation\ValidationException
+     *
+     * @return void
      */
     protected function handleApiCallFailedValidation(Validator $validator)
     {
         $message = $validator->messages()->first();
         $exception = new ValidationException();
-        $exception->statusMessage = $exception->statusMessage . ': ' . $message;
+        $exception->statusMessage = $exception->statusMessage.': '.$message;
         $exception->validation = $this->transformValidationOutput($validator);
 
         throw $exception;
@@ -115,8 +121,10 @@ abstract class ApiRequest extends FormRequest
 
     /**
      * @param Validator $validator
-     * @return void
+     *
      * @throws ApiInternalCallValidationException
+     *
+     * @return void
      */
     protected function handleApiInternalCallFailedValidation(Validator $validator): void
     {
@@ -127,17 +135,19 @@ abstract class ApiRequest extends FormRequest
     }
 
     /**
-     * @param array $input
+     * @param array  $input
      * @param string $key
+     *
      * @return bool
      */
     protected function isValueSet(array $input, string $key): bool
     {
-        return (true === isset($input[$key]) && false === empty($input[$key]));
+        return true === isset($input[$key]) && false === empty($input[$key]);
     }
 
     /**
      * @param Validator $validator
+     *
      * @return array
      */
     protected function transformValidationOutput($validator): array

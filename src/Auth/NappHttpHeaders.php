@@ -3,8 +3,7 @@
 namespace Napp\Core\Api\Auth;
 
 /**
- * Class NappHttpHeaders
- * @package Napp\Core\Api\Auth
+ * Class NappHttpHeaders.
  */
 class NappHttpHeaders
 {

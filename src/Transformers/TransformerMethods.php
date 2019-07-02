@@ -3,13 +3,13 @@
 namespace Napp\Core\Api\Transformers;
 
 /**
- * Class TransformerMethods
- * @package Napp\Core\Api\Transformers
+ * Class TransformerMethods.
  */
 class TransformerMethods
 {
     /**
      * @param $value
+     *
      * @return mixed
      */
     public static function convertJson($value)
@@ -19,6 +19,7 @@ class TransformerMethods
 
     /**
      * @param $value
+     *
      * @return int
      */
     public static function convertInteger($value): int
@@ -28,6 +29,7 @@ class TransformerMethods
 
     /**
      * @param $value
+     *
      * @return string
      */
     public static function convertString($value): string
@@ -38,6 +40,7 @@ class TransformerMethods
     /**
      * @param $value
      * @param $parameters
+     *
      * @return float
      */
     public static function convertFloat($value, $parameters): float
@@ -51,6 +54,7 @@ class TransformerMethods
 
     /**
      * @param $value
+     *
      * @return bool
      */
     public static function convertBoolean($value): bool
@@ -60,6 +64,7 @@ class TransformerMethods
 
     /**
      * @param $value
+     *
      * @return array
      */
     public static function convertArray($value): array
@@ -73,6 +78,7 @@ class TransformerMethods
 
     /**
      * @param $value
+     *
      * @return mixed|object
      */
     public static function convertObject($value)
@@ -86,6 +92,7 @@ class TransformerMethods
 
     /**
      * @param $value
+     *
      * @return string
      */
     public static function convertDatetime($value): string

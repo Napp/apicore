@@ -8,8 +8,7 @@ use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller;
 
 /**
- * Class BaseController
- * @package Napp\Core\Api\Controllers
+ * Class BaseController.
  */
 class BaseController extends Controller
 {

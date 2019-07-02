@@ -10,8 +10,7 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 
 /**
- * Class ApiTransformer
- * @package Napp\Core\Api\Transformers
+ * Class ApiTransformer.
  */
 class ApiTransformer implements TransformerInterface
 {
@@ -30,6 +29,7 @@ class ApiTransformer implements TransformerInterface
 
     /**
      * @param array|Model $apiMapping
+     *
      * @return void
      */
     public function setApiMapping($apiMapping)
@@ -45,6 +45,7 @@ class ApiTransformer implements TransformerInterface
 
     /**
      * @param array|Arrayable $data
+     *
      * @return array
      */
     public function transformInput($data): array
@@ -61,6 +62,7 @@ class ApiTransformer implements TransformerInterface
 
     /**
      * @param array|Arrayable|LengthAwarePaginator|Paginator $data
+     *
      * @return array
      */
     public function transformOutput($data): array
@@ -73,7 +75,7 @@ class ApiTransformer implements TransformerInterface
 
         if (true === $data instanceof Collection) {
             $output = $this->transformCollection($output, $data);
-        } else if (true === $data instanceof Model) {
+        } elseif (true === $data instanceof Model) {
             $output = $this->transformAttributes($output, $data->attributesToArray());
             $output = $this->transformRelationships($output, $data);
         } else {
@@ -86,6 +88,7 @@ class ApiTransformer implements TransformerInterface
 
     /**
      * @param array $data
+     *
      * @return array
      */
     public function transformOutputKeys(array $data): array
@@ -98,10 +101,10 @@ class ApiTransformer implements TransformerInterface
         return $output;
     }
 
-
     /**
      * @param array $output
      * @param array $data
+     *
      * @return array
      */
     protected function transformAttributes(array $output, array $data): array
@@ -120,6 +123,7 @@ class ApiTransformer implements TransformerInterface
     /**
      * @param array $output
      * @param Model $data
+     *
      * @return array
      */
     protected function transformRelationships(array $output, Model $data): array
@@ -127,7 +131,7 @@ class ApiTransformer implements TransformerInterface
         /** @var Model $data */
         $relationships = $data->getRelations();
         foreach ($relationships as $relationshipName => $relationship) {
-            if (true === $this->strict && ! $this->isMapped($relationshipName)) {
+            if (true === $this->strict && !$this->isMapped($relationshipName)) {
                 continue;
             }
 
@@ -161,6 +165,7 @@ class ApiTransformer implements TransformerInterface
 
     /**
      * @param $data
+     *
      * @return array
      */
     protected function transformPaginatedOutput($data): array
@@ -168,14 +173,14 @@ class ApiTransformer implements TransformerInterface
         $items = $this->transformOutput($data->getCollection());
 
         $output = [
-            'data' => $items,
+            'data'       => $items,
             'pagination' => [
-                'currentPage' => $data->currentPage(),
-                'perPage' => $data->perPage(),
+                'currentPage'  => $data->currentPage(),
+                'perPage'      => $data->perPage(),
                 'firstPageUrl' => $data->url(1),
-                'nextPageUrl' => $data->nextPageUrl(),
-                'prevPageUrl' => $data->previousPageUrl()
-            ]
+                'nextPageUrl'  => $data->nextPageUrl(),
+                'prevPageUrl'  => $data->previousPageUrl(),
+            ],
         ];
 
         if (true === $data instanceof LengthAwarePaginator) {
@@ -188,8 +193,9 @@ class ApiTransformer implements TransformerInterface
     }
 
     /**
-     * @param array $output
+     * @param array      $output
      * @param Collection $data
+     *
      * @return array
      */
     protected function transformCollection(array $output, Collection $data): array
@@ -203,6 +209,7 @@ class ApiTransformer implements TransformerInterface
 
     /**
      * @param string $newKey
+     *
      * @return string
      */
     protected function findOriginalKey(string $newKey)
@@ -218,6 +225,7 @@ class ApiTransformer implements TransformerInterface
 
     /**
      * @param string $originalKey
+     *
      * @return string
      */
     protected function findNewKey(string $originalKey): string
@@ -231,7 +239,8 @@ class ApiTransformer implements TransformerInterface
 
     /**
      * @param string $key
-     * @param mixed $value
+     * @param mixed  $value
+     *
      * @return mixed
      */
     protected function convertValueType(string $key, $value)
@@ -247,7 +256,7 @@ class ApiTransformer implements TransformerInterface
 
             if ('Nullable' === $method) {
                 if (true === empty($value) && false === \is_numeric($value)) {
-                    return null;
+                    return;
                 }
 
                 continue;
@@ -265,6 +274,7 @@ class ApiTransformer implements TransformerInterface
 
     /**
      * @param $type
+     *
      * @return array
      */
     protected static function parseStringDataType($type): array
@@ -288,7 +298,8 @@ class ApiTransformer implements TransformerInterface
     /**
      * Parse a parameter list.
      *
-     * @param  string  $parameter
+     * @param string $parameter
+     *
      * @return array
      */
     protected static function parseParameters($parameter): array
@@ -298,6 +309,7 @@ class ApiTransformer implements TransformerInterface
 
     /**
      * @param $type
+     *
      * @return array
      */
     protected static function parseManyDataTypes($type): array
@@ -315,6 +327,7 @@ class ApiTransformer implements TransformerInterface
 
     /**
      * @param $type
+     *
      * @return array
      */
     protected static function normalizeType($type): array
@@ -330,6 +343,7 @@ class ApiTransformer implements TransformerInterface
 
     /**
      * @param $type
+     *
      * @return bool
      */
     protected static function hasParameters($type): bool
@@ -339,6 +353,7 @@ class ApiTransformer implements TransformerInterface
 
     /**
      * @param $dataTypes
+     *
      * @return array
      */
     protected static function normalizeNullable($dataTypes): array
@@ -352,6 +367,7 @@ class ApiTransformer implements TransformerInterface
 
     /**
      * @param $type
+     *
      * @return string
      */
     protected static function normalizeDataType($type): string
@@ -370,6 +386,7 @@ class ApiTransformer implements TransformerInterface
 
     /**
      * @param $model
+     *
      * @return bool
      */
     protected function isTransformAware($model): bool
@@ -378,8 +395,10 @@ class ApiTransformer implements TransformerInterface
     }
 
     /**
-     * Check if key is mapped with apiMapping
+     * Check if key is mapped with apiMapping.
+     *
      * @param $key
+     *
      * @return bool
      */
     protected function isMapped($key): bool

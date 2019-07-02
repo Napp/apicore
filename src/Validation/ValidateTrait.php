@@ -7,16 +7,17 @@ use Illuminate\Contracts\Validation\Validator;
 use Napp\Core\Api\Exceptions\Exceptions\ValidationException;
 
 /**
- * Trait ValidateTrait
- * @package Napp\Core\Api\Validation
+ * Trait ValidateTrait.
  */
 trait ValidateTrait
 {
     /**
      * @param array $attributes
      * @param array $rules
-     * @return void
+     *
      * @throws ValidationException
+     *
+     * @return void
      */
     public static function validate(array $attributes, array $rules)
     {
@@ -25,8 +26,8 @@ trait ValidateTrait
         if (true === $validator->fails()) {
             $message = $validator->messages()->first();
 
-            $exception = new ValidationException;
-            $exception->statusMessage = $exception->statusMessage . ': ' . $message;
+            $exception = new ValidationException();
+            $exception->statusMessage = $exception->statusMessage.': '.$message;
             $exception->validation = $validator->messages();
 
             throw $exception;

@@ -6,9 +6,9 @@ use Faker\Factory;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Pagination\Paginator;
 use Napp\Core\Api\Tests\Models\Category;
+use Napp\Core\Api\Tests\TestCase;
 use Napp\Core\Api\Tests\Transformers\CategoryStrictTransformer;
 use Napp\Core\Api\Transformers\ApiTransformer;
-use Napp\Core\Api\Tests\TestCase;
 
 class ApiPaginatedTransformerTest extends TestCase
 {
@@ -45,10 +45,10 @@ class ApiPaginatedTransformerTest extends TestCase
 
         for ($x = 1; $x <= 10; $x++) {
             $input[] = [
-                'id' => $x,
+                'id'         => $x,
                 'first_name' => $this->faker->firstName,
-                'last_name' => $this->faker->lastName,
-                'age' => $this->faker->numberBetween(20, 80),
+                'last_name'  => $this->faker->lastName,
+                'age'        => $this->faker->numberBetween(20, 80),
             ];
         }
 
@@ -78,10 +78,10 @@ class ApiPaginatedTransformerTest extends TestCase
 
         for ($x = 1; $x <= 10; $x++) {
             $input[] = [
-                'id' => $x,
+                'id'         => $x,
                 'first_name' => $this->faker->firstName,
-                'last_name' => $this->faker->lastName,
-                'age' => $this->faker->numberBetween(20, 80),
+                'last_name'  => $this->faker->lastName,
+                'age'        => $this->faker->numberBetween(20, 80),
             ];
         }
 
@@ -107,6 +107,7 @@ class ApiPaginatedTransformerTest extends TestCase
             $this->assertArrayHasKey('age', $item);
         }
     }
+
     /** @group me */
     public function test_transform_length_aware_paginated_with_relationships()
     {
@@ -178,5 +179,4 @@ class ApiPaginatedTransformerTest extends TestCase
         $this->assertEquals(1, $transformedOutput['data'][0]['id']);
         $this->assertEquals(2, $transformedOutput['data'][1]['id']);
     }
-
 }

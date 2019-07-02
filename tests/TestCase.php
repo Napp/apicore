@@ -40,7 +40,8 @@ class TestCase extends \Orchestra\Testbench\TestCase
     /**
      * Define environment setup.
      *
-     * @param  \Illuminate\Foundation\Application $app
+     * @param \Illuminate\Foundation\Application $app
+     *
      * @return void
      */
     protected function getEnvironmentSetUp($app)
@@ -64,30 +65,31 @@ class TestCase extends \Orchestra\Testbench\TestCase
 
         // sqlite
         $app['config']->set('database.connections.testing', [
-            'driver' => 'sqlite',
+            'driver'   => 'sqlite',
             'database' => ':memory:',
-            'prefix' => '',
+            'prefix'   => '',
         ]);
         $app['config']->set('database.default', 'testing');
     }
 
     /**
-     * Loading package service provider
+     * Loading package service provider.
      *
      * @param \Illuminate\Foundation\Application $app
+     *
      * @return array
      */
     protected function getPackageProviders($app)
     {
         return [
             RequestServiceProvider::class,
-            RouterServiceProvider::class
+            RouterServiceProvider::class,
         ];
     }
 
     public function migrateTables()
     {
-        if ( ! Schema::hasTable('categories')) {
+        if (!Schema::hasTable('categories')) {
             Schema::create('categories', function (Blueprint $table) {
                 $table->increments('id');
                 $table->string('title');
@@ -95,7 +97,7 @@ class TestCase extends \Orchestra\Testbench\TestCase
             });
         }
 
-        if ( ! Schema::hasTable('products')) {
+        if (!Schema::hasTable('products')) {
             Schema::create('products', function (Blueprint $table) {
                 $table->increments('id');
                 $table->string('name');
@@ -105,7 +107,7 @@ class TestCase extends \Orchestra\Testbench\TestCase
             });
         }
 
-        if ( ! Schema::hasTable('variants')) {
+        if (!Schema::hasTable('variants')) {
             Schema::create('variants', function (Blueprint $table) {
                 $table->increments('id');
                 $table->string('name');
@@ -115,7 +117,7 @@ class TestCase extends \Orchestra\Testbench\TestCase
             });
         }
 
-        if ( ! Schema::hasTable('posts')) {
+        if (!Schema::hasTable('posts')) {
             Schema::create('posts', function (Blueprint $table) {
                 $table->increments('id');
                 $table->string('title');
@@ -126,12 +128,11 @@ class TestCase extends \Orchestra\Testbench\TestCase
                 $table->uuid('uuid')->nullable();
                 $table->timestamps();
             });
-
         }
     }
 
     /**
-     * Drop all tables to start the test with fresh data
+     * Drop all tables to start the test with fresh data.
      */
     public function dropAllTables()
     {

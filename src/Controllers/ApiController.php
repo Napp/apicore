@@ -7,8 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
 
 /**
- * Class ApiController
- * @package Napp\Core\Api\Controllers
+ * Class ApiController.
  */
 class ApiController extends BaseController
 {
@@ -40,6 +39,7 @@ class ApiController extends BaseController
 
     /**
      * @param int $code
+     *
      * @return $this
      */
     public function setStatusCode($code)
@@ -51,6 +51,7 @@ class ApiController extends BaseController
 
     /**
      * @param int $code
+     *
      * @return $this
      */
     public function setResponseCode($code)
@@ -62,6 +63,7 @@ class ApiController extends BaseController
 
     /**
      * @param string $currentETag
+     *
      * @return JsonResponse
      */
     public function checkETag($currentETag): ?JsonResponse
@@ -76,6 +78,7 @@ class ApiController extends BaseController
     /**
      * @param array $data
      * @param array $headers
+     *
      * @return JsonResponse
      */
     public function respond(array $data, array $headers = []): JsonResponse
@@ -86,6 +89,7 @@ class ApiController extends BaseController
     /**
      * @param array $data
      * @param array $headers
+     *
      * @return JsonResponse
      */
     public function respondWithSingleObject(array $data, array $headers = []): JsonResponse
@@ -95,6 +99,7 @@ class ApiController extends BaseController
 
     /**
      * @param string $message
+     *
      * @return JsonResponse
      */
     public function respondWithError(string $message): JsonResponse
@@ -102,14 +107,15 @@ class ApiController extends BaseController
         return $this->respond([
             'error' => [
                 'message' => $message,
-                'code'    => $this->getStatusCode()
-            ]
+                'code'    => $this->getStatusCode(),
+            ],
         ]);
     }
 
     /**
      * @param array $data
      * @param array $headers
+     *
      * @return JsonResponse
      */
     public function responseCreated(array $data, array $headers = []): JsonResponse
@@ -120,7 +126,8 @@ class ApiController extends BaseController
 
     /**
      * @param string $message
-     * @param array $headers
+     * @param array  $headers
+     *
      * @return JsonResponse
      */
     public function responseNoContent(
@@ -130,17 +137,17 @@ class ApiController extends BaseController
         return $this->setResponseCode(204)
             ->respond(['message' => $message], $headers);
     }
-    
-        /**
+
+    /**
      * @param string $message
-     * @param array $headers
+     * @param array  $headers
+     *
      * @return JsonResponse
      */
     public function responseAccepted(
         string $message = 'The request was accepted for processing',
         array $headers = []
     ): JsonResponse {
-
         return $this->setResponseCode(202)
             ->setStatusCode(224)
             ->respond(['message' => $message], $headers);
@@ -148,6 +155,7 @@ class ApiController extends BaseController
 
     /**
      * @param array $headers
+     *
      * @return JsonResponse
      */
     public function responseNotModified(array $headers = []): JsonResponse
@@ -158,6 +166,7 @@ class ApiController extends BaseController
 
     /**
      * @param string $message
+     *
      * @return \Illuminate\Http\JsonResponse
      */
     public function responseBadRequest(string $message = 'The request failed due to an application error.'): JsonResponse
@@ -169,6 +178,7 @@ class ApiController extends BaseController
 
     /**
      * @param string $message
+     *
      * @return JsonResponse
      */
     public function responseValidationFailed(string $message = 'Validation error.'): JsonResponse
@@ -180,6 +190,7 @@ class ApiController extends BaseController
 
     /**
      * @param string $message
+     *
      * @return JsonResponse
      */
     public function responseUnprocessableEntity(string $message = 'The request was well-formed but was unable to be followed due to semantic errors.'): JsonResponse
@@ -191,6 +202,7 @@ class ApiController extends BaseController
 
     /**
      * @param string $message
+     *
      * @return JsonResponse
      */
     public function responseUnauthorized(string $message = 'Authentication credentials were missing or incorrect.'): JsonResponse
@@ -202,6 +214,7 @@ class ApiController extends BaseController
 
     /**
      * @param string $message
+     *
      * @return JsonResponse
      */
     public function responseUnauthorization(string $message = 'Authorization error. Requested resource is restricted.'): JsonResponse
@@ -213,6 +226,7 @@ class ApiController extends BaseController
 
     /**
      * @param string $message
+     *
      * @return JsonResponse
      */
     public function responseForbidden(string $message = 'Forbidden.'): JsonResponse
@@ -224,6 +238,7 @@ class ApiController extends BaseController
 
     /**
      * @param string $message
+     *
      * @return JsonResponse
      */
     public function responseNotFound(string $message = 'Not found.'): JsonResponse
@@ -235,6 +250,7 @@ class ApiController extends BaseController
 
     /**
      * @param string $message
+     *
      * @return JsonResponse
      */
     public function responseClientNotFound(string $message = 'Client not found.'): JsonResponse
@@ -246,6 +262,7 @@ class ApiController extends BaseController
 
     /**
      * @param string $message
+     *
      * @return JsonResponse
      */
     public function responseInternalServerError(string $message = 'Internal Server Error.'): JsonResponse
@@ -257,6 +274,7 @@ class ApiController extends BaseController
 
     /**
      * @param string $message
+     *
      * @return JsonResponse
      */
     public function responseNotImplemented(string $message = 'The request has not been implemented.'): JsonResponse
@@ -268,6 +286,7 @@ class ApiController extends BaseController
 
     /**
      * @param string $message
+     *
      * @return JsonResponse
      */
     public function responseServiceUnavailable(string $message = 'Service Unavailable.'): JsonResponse
@@ -279,6 +298,7 @@ class ApiController extends BaseController
 
     /**
      * @param string $message
+     *
      * @return JsonResponse
      */
     public function responseHTTPVersionNotSupported(string $message = 'This is returned if you use the HTTP protocol.'): JsonResponse
@@ -290,6 +310,7 @@ class ApiController extends BaseController
 
     /**
      * @param Request $request
+     *
      * @return int
      */
     public function getLimit(Request $request): int
@@ -305,6 +326,7 @@ class ApiController extends BaseController
 
     /**
      * @param Request $request
+     *
      * @return int
      */
     protected function getOffset(Request $request): int
@@ -313,9 +335,10 @@ class ApiController extends BaseController
     }
 
     /**
-     * Get the page for pagination
+     * Get the page for pagination.
      *
      * @param Request $request
+     *
      * @return int
      */
     public function getPage(Request $request): int
@@ -324,9 +347,10 @@ class ApiController extends BaseController
     }
 
     /**
-     * Get the page size for pagination
+     * Get the page size for pagination.
      *
      * @param Request $request
+     *
      * @return int
      */
     public function getPageSize(Request $request): int

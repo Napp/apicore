@@ -1,12 +1,11 @@
-<?php 
+<?php
 
 namespace Napp\Core\Api\Exceptions\Exceptions;
 
 use Exception as BaseException;
 
 /**
- * Class Exception
- * @package Napp\Core\Api\Exceptions\Exceptions
+ * Class Exception.
  */
 class Exception extends BaseException
 {

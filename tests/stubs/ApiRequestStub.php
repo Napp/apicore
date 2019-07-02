@@ -20,6 +20,7 @@ class ApiRequestStub extends ApiRequest
 
     /**
      * @param array $rules
+     *
      * @return void
      */
     public function setRules(array $rules)
@@ -29,6 +30,7 @@ class ApiRequestStub extends ApiRequest
 
     /**
      * @param array $data
+     *
      * @return void
      */
     public function setData(array $data)
