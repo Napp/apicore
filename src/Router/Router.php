@@ -2,8 +2,8 @@
 
 namespace Napp\Core\Api\Router;
 
-use Illuminate\Foundation\Application;
 use Illuminate\Http\Request;
+use Illuminate\Foundation\Application;
 use Illuminate\Routing\Router as LaravelRouter;
 
 /**
@@ -237,7 +237,7 @@ class Router
         $server = [];
 
         foreach ($headers as $headerType => $headerValue) {
-            $headerType = 'HTTP_'.$headerType;
+            $headerType = 'HTTP_' . $headerType;
 
             $server[$headerType] = $headerValue;
         }
