@@ -2,12 +2,12 @@
 
 namespace Napp\Core\Api\Transformers;
 
-use Illuminate\Contracts\Support\Arrayable;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Pagination\LengthAwarePaginator;
-use Illuminate\Pagination\Paginator;
-use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
+use Illuminate\Support\Collection;
+use Illuminate\Pagination\Paginator;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Contracts\Support\Arrayable;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 /**
  * Class ApiTransformer.
@@ -110,7 +110,7 @@ class ApiTransformer implements TransformerInterface
     protected function transformAttributes(array $output, array $data): array
     {
         foreach ($data as $key => $value) {
-            if (true === $this->strict && !$this->isMapped($key)) {
+            if (true === $this->strict && ! $this->isMapped($key)) {
                 continue;
             }
 
@@ -131,7 +131,7 @@ class ApiTransformer implements TransformerInterface
         /** @var Model $data */
         $relationships = $data->getRelations();
         foreach ($relationships as $relationshipName => $relationship) {
-            if (true === $this->strict && !$this->isMapped($relationshipName)) {
+            if (true === $this->strict && ! $this->isMapped($relationshipName)) {
                 continue;
             }
 
@@ -249,7 +249,7 @@ class ApiTransformer implements TransformerInterface
             ? $this->apiMapping[$key]['dataType']
             : 'unknown';
 
-        foreach (static::normalizeType($type) as list($method, $parameters)) {
+        foreach (static::normalizeType($type) as [$method, $parameters]) {
             if (true === empty($method)) {
                 return $value;
             }
@@ -285,7 +285,7 @@ class ApiTransformer implements TransformerInterface
         // easy {data-type}:{parameters} formatting convention. For instance the
         // data-type "float:3" states that the value will be converted to a float with 3 decimals.
         if (mb_strpos($type, ':') !== false) {
-            list($dataType, $parameter) = explode(':', $type, 2);
+            [$dataType, $parameter] = explode(':', $type, 2);
 
             $parameters = static::parseParameters($parameter);
         }

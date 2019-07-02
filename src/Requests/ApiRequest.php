@@ -2,13 +2,13 @@
 
 namespace Napp\Core\Api\Requests;
 
-use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
-use Napp\Core\Api\Exceptions\Exceptions\ApiInternalCallValidationException;
-use Napp\Core\Api\Exceptions\Exceptions\InvalidFieldException;
-use Napp\Core\Api\Exceptions\Exceptions\ValidationException;
+use Illuminate\Contracts\Validation\Validator;
 use Napp\Core\Api\Transformers\ApiTransformer;
 use Napp\Core\Api\Transformers\TransformerInterface;
+use Napp\Core\Api\Exceptions\Exceptions\ValidationException;
+use Napp\Core\Api\Exceptions\Exceptions\InvalidFieldException;
+use Napp\Core\Api\Exceptions\Exceptions\ApiInternalCallValidationException;
 
 /**
  * Class ApiRequest.
@@ -57,7 +57,7 @@ abstract class ApiRequest extends FormRequest
         $rules = $this->rules();
         if (false === empty(array_diff_key($input, $rules))) {
             $exception = new InvalidFieldException();
-            $exception->statusMessage = $exception->statusMessage.': '.implode(',', array_keys(array_diff_key($input, $rules)));
+            $exception->statusMessage = $exception->statusMessage . ': ' . implode(',', array_keys(array_diff_key($input, $rules)));
 
             throw $exception;
         }
@@ -72,7 +72,7 @@ abstract class ApiRequest extends FormRequest
          * Remove input fields like _method, _token, etc.
          */
         $input = array_filter($this->input(), function ($key) {
-            return !starts_with($key, '_');
+            return ! starts_with($key, '_');
         }, ARRAY_FILTER_USE_KEY);
 
         return $this->getTransformer()->transformInput($input);
@@ -113,7 +113,7 @@ abstract class ApiRequest extends FormRequest
     {
         $message = $validator->messages()->first();
         $exception = new ValidationException();
-        $exception->statusMessage = $exception->statusMessage.': '.$message;
+        $exception->statusMessage = $exception->statusMessage . ': ' . $message;
         $exception->validation = $this->transformValidationOutput($validator);
 
         throw $exception;

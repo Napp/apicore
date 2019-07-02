@@ -2,8 +2,8 @@
 
 namespace Napp\Core\Api\Router\Provider;
 
-use Illuminate\Support\ServiceProvider as BaseProvider;
 use Napp\Core\Api\Router\Router;
+use Illuminate\Support\ServiceProvider as BaseProvider;
 
 /**
  * Class RouterServiceProvider.
