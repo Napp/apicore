@@ -23,7 +23,7 @@ class AuthServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->publishes([
-            __DIR__. '/config/api-core.php' => config_path('api-core.php'),
+            __DIR__ . '/../config/api-core.php' => config_path('api-core.php'),
         ]);
     }
 }
