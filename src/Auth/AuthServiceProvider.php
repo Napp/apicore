@@ -15,6 +15,8 @@ class AuthServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        $this->mergeConfigFrom($this->configPath(), 'api-core');
+
         Auth::extend('api', function ($app, $name, array $config) {
             return new ApiGuard(Auth::createUserProvider($config['provider']), $app['request'], $app['config']->get('api-core.api-key'));
         });
@@ -23,7 +25,17 @@ class AuthServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->publishes([
-            __DIR__ . '/../config/api-core.php' => config_path('api-core.php'),
+            $this->configPath() => config_path('api-core.php'),
         ]);
+    }
+
+    /**
+     * Get the config path
+     *
+     * @return string
+     */
+    protected function configPath()
+    {
+        return __DIR__ . '/../../config/api-core.php';
     }
 }

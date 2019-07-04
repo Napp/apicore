@@ -47,6 +47,7 @@
   "extra": {
     "laravel": {
       "providers": [
+        "Napp\\Core\\Api\\Auth\\AuthServiceProvider",
         "Napp\\Core\\Api\\Requests\\Provider\\RequestServiceProvider",
         "Napp\\Core\\Api\\Router\\Provider\\RouterServiceProvider"
       ],
