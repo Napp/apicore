@@ -85,7 +85,7 @@ class NappApiHandler
             return $e->getStatusCode();
         }
 
-        if ($e->getCode()) {
+        if ($e->getCode() && \is_int($e->getCode())) {
             return $e->getCode();
         }
 
