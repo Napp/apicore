@@ -2,8 +2,8 @@
 
 namespace Napp\Core\Api\Router;
 
-use Illuminate\Http\Request;
 use Illuminate\Foundation\Application;
+use Illuminate\Http\Request;
 use Illuminate\Routing\Router as LaravelRouter;
 
 /**

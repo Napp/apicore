@@ -3,10 +3,10 @@
 namespace Napp\Core\Api\Exceptions;
 
 use Illuminate\Http\JsonResponse;
-use Napp\Core\Api\Exceptions\Renderer\Renderer;
-use Napp\Core\Api\Exceptions\Renderer\DebugRenderer;
-use Napp\Core\Api\Exceptions\Renderer\RendererInterface;
 use Napp\Core\Api\Exceptions\Exceptions\Exception as NappException;
+use Napp\Core\Api\Exceptions\Renderer\DebugRenderer;
+use Napp\Core\Api\Exceptions\Renderer\Renderer;
+use Napp\Core\Api\Exceptions\Renderer\RendererInterface;
 
 /**
  * Class NappApiHandler.

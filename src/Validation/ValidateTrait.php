@@ -2,9 +2,9 @@
 
 namespace Napp\Core\Api\Validation;
 
+use Illuminate\Contracts\Validation\Factory as ValidatorFactory;
 use Illuminate\Contracts\Validation\Validator;
 use Napp\Core\Api\Exceptions\Exceptions\ValidationException;
-use Illuminate\Contracts\Validation\Factory as ValidatorFactory;
 
 /**
  * Trait ValidateTrait.

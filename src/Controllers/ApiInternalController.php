@@ -2,12 +2,12 @@
 
 namespace Napp\Core\Api\Controllers;
 
-use Illuminate\Http\Response;
 use Illuminate\Auth\AuthManager;
-use Napp\Core\Api\Router\Router;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Response;
 use Napp\Core\Api\Auth\NappHttpHeaders;
 use Napp\Core\Api\Exceptions\Exceptions\ApiInternalCallException;
+use Napp\Core\Api\Router\Router;
 
 /**
  * Class ApiInternalController.

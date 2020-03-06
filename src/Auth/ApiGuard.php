@@ -2,9 +2,9 @@
 
 namespace Napp\Core\Api\Auth;
 
-use Illuminate\Http\Request;
 use Illuminate\Auth\TokenGuard;
 use Illuminate\Contracts\Auth\UserProvider;
+use Illuminate\Http\Request;
 
 /**
  * Class ApiGuard.
