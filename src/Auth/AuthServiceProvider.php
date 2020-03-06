@@ -30,7 +30,7 @@ class AuthServiceProvider extends ServiceProvider
     }
 
     /**
-     * Get the config path
+     * Get the config path.
      *
      * @return string
      */

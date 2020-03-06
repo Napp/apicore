@@ -50,14 +50,14 @@ class DebugRenderer implements RendererInterface
 
         return response()->json(
             [
-            'error' => [
-                'code'    => $this->statusCode,
-                'message' => $this->statusMessage,
-                'type'    => \get_class($this->exception),
-                'file'    => $this->exception->getFile(),
-                'line'    => $this->exception->getLine(),
-                'trace'   => $this->formatTrace($this->exception->getTrace()),
-            ], ],
+                'error' => [
+                    'code'    => $this->statusCode,
+                    'message' => $this->statusMessage,
+                    'type'    => \get_class($this->exception),
+                    'file'    => $this->exception->getFile(),
+                    'line'    => $this->exception->getLine(),
+                    'trace'   => $this->formatTrace($this->exception->getTrace()),
+                ], ],
             $this->responseCode
         );
     }

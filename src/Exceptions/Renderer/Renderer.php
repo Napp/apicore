@@ -42,10 +42,10 @@ class Renderer implements RendererInterface
 
             return response()->json(
                 [
-                'error' => [
-                    'code'    => $this->statusCode,
-                    'message' => $this->statusMessage,
-                ], ],
+                    'error' => [
+                        'code'    => $this->statusCode,
+                        'message' => $this->statusMessage,
+                    ], ],
                 $this->responseCode
             );
         }
@@ -54,10 +54,10 @@ class Renderer implements RendererInterface
             case 400:
                 return response()->json(
                     [
-                    'error' => [
-                        'code'    => $this->statusCode,
-                        'message' => 'Unprocessable Entity',
-                    ], ],
+                        'error' => [
+                            'code'    => $this->statusCode,
+                            'message' => 'Unprocessable Entity',
+                        ], ],
                     $this->responseCode
                 );
             case 401:
@@ -81,28 +81,28 @@ class Renderer implements RendererInterface
             case 404:
                 return response()->json(
                     [
-                    'error' => [
-                        'code'    => $this->statusCode,
-                        'message' => 'Not Found',
-                    ], ],
+                        'error' => [
+                            'code'    => $this->statusCode,
+                            'message' => 'Not Found',
+                        ], ],
                     $this->responseCode
                 );
             case 405:
                 return response()->json(
                     [
-                    'error' => [
-                        'code'    => $this->statusCode,
-                        'message' => 'Method Not Allowed',
-                    ], ],
+                        'error' => [
+                            'code'    => $this->statusCode,
+                            'message' => 'Method Not Allowed',
+                        ], ],
                     $this->responseCode
                 );
             default:
                 return response()->json(
                     [
-                    'error' => [
-                        'code'    => $this->statusCode,
-                        'message' => 'Internal Server Error',
-                    ], ],
+                        'error' => [
+                            'code'    => $this->statusCode,
+                            'message' => 'Internal Server Error',
+                        ], ],
                     500
                 );
         }

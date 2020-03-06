@@ -58,7 +58,7 @@ abstract class ApiRequest extends FormRequest
         $rules = $this->rules();
         if (false === empty(array_diff_key($input, $rules))) {
             $exception = new InvalidFieldException();
-            $exception->statusMessage = $exception->statusMessage.': '.implode(',', array_keys(array_diff_key($input, $rules)));
+            $exception->statusMessage = $exception->statusMessage . ': ' . implode(',', array_keys(array_diff_key($input, $rules)));
 
             throw $exception;
         }
@@ -114,7 +114,7 @@ abstract class ApiRequest extends FormRequest
     {
         $message = $validator->messages()->first();
         $exception = new ValidationException();
-        $exception->statusMessage = $exception->statusMessage.': '.$message;
+        $exception->statusMessage = $exception->statusMessage . ': ' . $message;
         $exception->validation = $this->transformValidationOutput($validator);
 
         throw $exception;

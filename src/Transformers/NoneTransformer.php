@@ -2,8 +2,8 @@
 
 namespace Napp\Core\Api\Transformers;
 
-use Illuminate\Support\Arr;
 use Illuminate\Contracts\Support\Arrayable;
+use Illuminate\Support\Arr;
 
 /**
  * Class NoneTransformer.
