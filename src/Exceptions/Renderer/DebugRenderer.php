@@ -3,6 +3,7 @@
 namespace Napp\Core\Api\Exceptions\Renderer;
 
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Arr;
 
 /**
  * Class DebugRenderer.
@@ -112,7 +113,7 @@ class DebugRenderer implements RendererInterface
     protected function formatTrace(array $trace)
     {
         foreach ($trace as &$t) {
-            $t = \array_except($t, ['args']);
+            $t = Arr::except($t, ['args']);
         }
 
         return $trace;

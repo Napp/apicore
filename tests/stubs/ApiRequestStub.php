@@ -57,7 +57,7 @@ class ApiRequestStub extends ApiRequest
     /**
      * @return array
      */
-    protected function validationData(): array
+    public function validationData(): array
     {
         return $this->data;
     }

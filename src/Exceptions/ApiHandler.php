@@ -14,13 +14,13 @@ class ApiHandler extends ExceptionHandler
 {
     /**
      * @param \Illuminate\Http\Request $request
-     * @param \Exception               $e
+     * @param \Exception|\Throwable $e
      *
      * @throws \ReflectionException
      *
      * @return \Illuminate\Http\Response|\Illuminate\Http\JsonResponse
      */
-    public function render($request, Exception $e)
+    public function render($request, $e)
     {
         if (true === app()->isDownForMaintenance()) {
             return response()->json([
