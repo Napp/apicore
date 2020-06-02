@@ -64,11 +64,11 @@ class DebugRenderer implements RendererInterface
     }
 
     /**
-     * @param \Exception $e
+     * @param \Throwable $e
      *
      * @return void
      */
-    public function setException(\Exception $e)
+    public function setException(\Throwable $e)
     {
         $this->exception = $e;
     }

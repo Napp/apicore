@@ -19,11 +19,11 @@ class NappApiHandler
     protected $displayer;
 
     /**
-     * @param \Exception $e
+     * @param \Throwable $e
      *
      * @throws \ReflectionException
      */
-    public function __construct(\Exception $e)
+    public function __construct(\Throwable $e)
     {
         if (true === config('app.debug')) {
             $this->displayer = new DebugRenderer();
@@ -46,11 +46,11 @@ class NappApiHandler
     }
 
     /**
-     * @param \Exception $e
+     * @param \Throwable $e
      *
      * @return int
      */
-    protected function getResponseCode(\Exception $e): ?int
+    protected function getResponseCode(\Throwable $e): ?int
     {
         if (true === $e instanceof NappException) {
             /* @var NappException $e */
@@ -74,11 +74,11 @@ class NappApiHandler
     }
 
     /**
-     * @param \Exception $e
+     * @param \Throwable $e
      *
      * @return int
      */
-    protected function getStatusCode(\Exception $e): ?int
+    protected function getStatusCode(\Throwable $e): ?int
     {
         if (true === $e instanceof NappException) {
             /* @var NappException $e */
@@ -106,13 +106,13 @@ class NappApiHandler
     }
 
     /**
-     * @param \Exception $e
+     * @param \Throwable $e
      *
      * @throws \ReflectionException
      *
      * @return string
      */
-    protected function getStatusMessage(\Exception $e): string
+    protected function getStatusMessage(\Throwable $e): string
     {
         if (true === $e instanceof NappException) {
             /* @var NappException $e */
