@@ -10,30 +10,18 @@ class Post extends Model
         'uuid',
     ];
 
-    /**
-     * @var array
-     */
-    public $dates = [
+    protected $dates = [
         'created_at',
     ];
 
-    /**
-     * @var array
-     */
-    public $casts = [
+    protected $casts = [
         'tags' => 'json',
     ];
 
-    /**
-     * @var array
-     */
-    public $hidden = [
+    protected $hidden = [
         'updated_at',
     ];
 
-    /**
-     * @var array
-     */
     public $apiMapping = [
         'id'         => ['newName' => 'id',         'dataType' => 'int'],
         'title'      => ['newName' => 'name',       'dataType' => 'string'],
